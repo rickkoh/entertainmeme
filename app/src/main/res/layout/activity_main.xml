@@ -44,11 +44,11 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_weight="90"
-                android:id="@+id/imageView"
-                android:background="#ccc"
+                android:id="@+id/memeImageView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_weight="90"
+                android:background="#ccc"
                 tools:srcCompat="@tools:sample/avatars" />
         </LinearLayout>
 

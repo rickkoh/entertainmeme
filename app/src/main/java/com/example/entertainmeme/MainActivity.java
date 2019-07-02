@@ -5,21 +5,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView titleTextView;
+    ImageView memeImageView;
 
     Button previousBtn;
     Button skipBtn;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         titleTextView = (TextView)findViewById(R.id.titleTextView);
+        memeImageView = (ImageView)findViewById(R.id.memeImageView);
 
         previousBtn = (Button)findViewById(R.id.previousBtn);
         skipBtn = (Button)findViewById(R.id.skipBtn);
@@ -48,14 +52,14 @@ public class MainActivity extends AppCompatActivity {
         skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                API();
+                fetchAPI();
             }
         });
 
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                fetchAPI();
             }
         });
 
@@ -67,10 +71,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        fetchAPI();
 
     }
 
-    public void API() {
+    public void fetchAPI() {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://meme-api.herokuapp.com/gimme";
@@ -79,7 +84,16 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        titleTextView.setText(response);
+                        JSONObject json;
+                        try {
+                            json = new JSONObject(response);
+                            titleTextView.setText(json.getString("title"));
+                            Glide.with(MainActivity.this)
+                                    .load(json.getString("url"))
+                                    .into(memeImageView);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
