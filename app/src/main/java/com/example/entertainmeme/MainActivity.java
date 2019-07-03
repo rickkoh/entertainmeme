@@ -1,7 +1,6 @@
 package com.example.entertainmeme;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final MemeDbHandler memeDbHandler = new MemeDbHandler(this);
+
         titleTextView = (TextView)findViewById(R.id.titleTextView);
         memeImageView = (ImageView)findViewById(R.id.memeImageView);
 
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                memeDbHandler.insertMeme(meme);
 
                 RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
                 String url = "https://meme-api.herokuapp.com/gimme";
