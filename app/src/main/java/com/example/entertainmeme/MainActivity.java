@@ -1,8 +1,10 @@
 package com.example.entertainmeme;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,11 +17,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     TextView titleTextView;
     ImageView memeImageView;
@@ -28,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     Button skipBtn;
     Button likeBtn;
     Button inventoryBtn;
+
+    Meme meme;
+    MemeLoader memeLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,21 +51,51 @@ public class MainActivity extends AppCompatActivity {
         previousBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                meme = memeLoader.getPrevious();
+                loadMeme();
             }
         });
 
         skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fetchAPI();
+                meme = memeLoader.getNext();
+                loadMeme();
             }
         });
 
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fetchAPI();
+
+                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+                String url = "https://meme-api.herokuapp.com/gimme";
+
+                StringRequest stringRequest = new StringRequest(
+                        Request.Method.GET,
+                        url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject j = new JSONObject(response);
+                                    titleTextView.setText(j.getString("title"));
+                                    Glide.with(MainActivity.this).load(j.getString("url")).into(memeImageView);
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Log.e(TAG, e.toString());
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError e) {
+                                Log.e(TAG, e.toString());
+                            }
+                        });
+
+                queue.add(stringRequest);
             }
         });
 
@@ -71,38 +107,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        fetchAPI();
+        memeLoader = new MemeLoader(MainActivity.this);
 
     }
 
-    public void fetchAPI() {
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://meme-api.herokuapp.com/gimme";
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        JSONObject json;
-                        try {
-                            json = new JSONObject(response);
-                            titleTextView.setText(json.getString("title"));
-                            Glide.with(MainActivity.this)
-                                    .load(json.getString("url"))
-                                    .into(memeImageView);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                titleTextView.setText("That didn't work!");
-            }
-        });
-
-        queue.add(stringRequest);
+    public void loadMeme() {
+        try {
+            titleTextView.setText(meme.getTitle());
+            memeImageView.setImageBitmap(meme.getImage());
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
 
     }
 }
