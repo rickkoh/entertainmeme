@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".InventoryActivity">
         </activity>
+        <activity android:name=".MemeActivity">
+        </activity>
     </application>
 
 </manifest>
