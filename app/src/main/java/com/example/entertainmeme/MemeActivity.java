@@ -22,7 +22,6 @@ import org.json.JSONObject;
 
 public class MemeActivity extends AppCompatActivity {
 
-    TextView titleTextView;
     PhotoView memePhotoView;
 
     @Override
@@ -32,13 +31,12 @@ public class MemeActivity extends AppCompatActivity {
 
         // Point of this activity is to display the meme in full size
 
-        titleTextView = (TextView)findViewById(R.id.titleTextView);
         memePhotoView = (PhotoView)findViewById(R.id.memePhotoView);
 
         String title = getIntent().getStringExtra("title");
         String url = getIntent().getStringExtra("url");
 
-        titleTextView.setText(title);
+        setTitle(title);
 
         Glide.with(this)
                 .load(url)

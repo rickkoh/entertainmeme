@@ -7,16 +7,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-public class MemeDbHandler extends SQLiteOpenHelper {
+public class MemeDbHelper extends SQLiteOpenHelper {
 
-    private static final String TAG = "MemeDbHandler";
+    private static final String TAG = "MemeDbHelper";
     private static final String dbName = "MemeDb";
     private static final int version = 1;
 
-    public MemeDbHandler(Context context) {
+    public MemeDbHelper(Context context) {
         super(context, dbName, null, version);
     }
 
@@ -39,25 +42,30 @@ public class MemeDbHandler extends SQLiteOpenHelper {
         values.put(Meme.C_SUBREDDIT, meme.getSubreddit());
         values.put(Meme.C_TITLE, meme.getTitle());
         values.put(Meme.C_URL, meme.getUrl());
-        values.put(Meme.C_DATETIMEADDED, "Wed Jul 03 2019 19:12:41");
+        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+        values.put(Meme.C_DATETIMEADDED, dateFormat.format(Calendar.getInstance().getTime()));
 
         try {
             db.insert(Meme.TABLE_NAME, null, values);
         } catch (Exception e) {
             Log.d(null, e.toString());
+            values = new ContentValues();
+            values.put(Meme.C_DATETIMEADDED, Calendar.getInstance().getTime().toString());
+        }
+
+        try {
+            db.update(Meme.TABLE_NAME, values, Meme.C_POSTLINK + "=?", new String[]{meme.getPostLink()});
+        } catch (Exception ee) {
+
         }
 
         db.close();
     }
 
-    public void getMeme(Meme meme) {
-
-    }
-
     public List<Meme> getAllMemes() {
         List<Meme> memes = new ArrayList<Meme>();
 
-        String selectQuery = "SELECT * FROM " + Meme.TABLE_NAME;
+        String selectQuery = "SELECT * FROM " + Meme.TABLE_NAME + " ORDER BY " + Meme.C_DATETIMEADDED + " DESC";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);

@@ -9,15 +9,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
-
-import org.json.JSONObject;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final MemeDbHandler memeDbHandler = new MemeDbHandler(this);
+        final MemeDbHelper memeDbHelper = new MemeDbHelper(this);
 
         titleTextView = (TextView)findViewById(R.id.titleTextView);
         memeImageView = (ImageView)findViewById(R.id.memeImageView);
@@ -69,36 +63,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                memeDbHandler.insertMeme(meme);
-
-                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-                String url = "https://meme-api.herokuapp.com/gimme";
-
-                StringRequest stringRequest = new StringRequest(
-                        Request.Method.GET,
-                        url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                try {
-                                    JSONObject j = new JSONObject(response);
-                                    titleTextView.setText(j.getString("title"));
-                                    Glide.with(MainActivity.this).load(j.getString("url")).into(memeImageView);
-
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    Log.e(TAG, e.toString());
-                                }
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError e) {
-                                Log.e(TAG, e.toString());
-                            }
-                        });
-
-                queue.add(stringRequest);
+                memeDbHelper.insertMeme(meme);
+                meme = memeLoader.getNext();
+                loadMeme();
             }
         });
 
@@ -110,7 +77,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        memeImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (meme == null) return;
+                Intent i = new Intent(MainActivity.this, MemeActivity.class);
+                i.putExtra("title", meme.getTitle());
+                i.putExtra("url", meme.getUrl());
+                startActivity(i);
+            }
+        });
+
         memeLoader = new MemeLoader(MainActivity.this);
+
+        meme = memeLoader.getCurrent();
 
     }
 
@@ -118,9 +98,10 @@ public class MainActivity extends AppCompatActivity {
         try {
             titleTextView.setText(meme.getTitle());
             memeImageView.setImageBitmap(meme.getImage());
+            DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+            Log.e(TAG, dateFormat.format(Calendar.getInstance().getTime()));
         } catch (Exception e) {
             Log.e(TAG, e.toString());
         }
-
     }
 }

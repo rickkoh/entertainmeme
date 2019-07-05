@@ -26,6 +26,8 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:adjustViewBounds="true"
+            android:maxHeight="400dp"
             android:id="@+id/memeImageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
