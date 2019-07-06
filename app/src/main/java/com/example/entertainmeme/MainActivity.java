@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     Button skipBtn;
     Button likeBtn;
     Button inventoryBtn;
+    Button topBtn;
 
     Meme meme;
     MemeLoader memeLoader;
@@ -42,6 +43,14 @@ public class MainActivity extends AppCompatActivity {
         skipBtn = (Button)findViewById(R.id.skipBtn);
         likeBtn = (Button)findViewById(R.id.likeBtn);
         inventoryBtn = (Button)findViewById(R.id.inventoryBtn);
+        topBtn=(Button)findViewById(R.id.topBtn);
+
+        topBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         previousBtn.setOnClickListener(new View.OnClickListener() {
             @Override

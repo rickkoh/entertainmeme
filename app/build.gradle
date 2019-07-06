@@ -25,7 +25,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    compile 'com.android.volley:volley:1.1.1'
-    compile 'com.github.bumptech.glide:glide:4.0.0-RC0'
+    implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.github.bumptech.glide:glide:4.0.0-RC0'
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 }
