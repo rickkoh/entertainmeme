@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
 
 
@@ -13,9 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,13 +48,16 @@
 
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/memeImageView"
+            <link.fls.swipestack.SwipeStack
+                android:id="@+id/swipeStack"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="90"
-                android:background="#ccc"
-                tools:srcCompat="@tools:sample/avatars" />
+                android:layout_above="@+id/buttonSwipeLeft"
+                app:stack_rotation="0"
+                app:stack_size="2"
+                app:stack_spacing="0dp"/>
+
         </LinearLayout>
 
         <LinearLayout

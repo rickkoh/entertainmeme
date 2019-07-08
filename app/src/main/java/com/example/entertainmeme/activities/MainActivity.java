@@ -1,4 +1,4 @@
-package com.example.entertainmeme.activity;
+package com.example.entertainmeme.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,19 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.entertainmeme.helper.MemeLoader;
+import com.example.entertainmeme.helpers.MemeLoader;
 import com.example.entertainmeme.R;
 import com.example.entertainmeme.Top100;
-import com.example.entertainmeme.helper.MemeDbHelper;
-import com.example.entertainmeme.helper.SwipeStackAdapter;
-import com.example.entertainmeme.model.Meme;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import com.example.entertainmeme.helpers.MemeDbHelper;
+import com.example.entertainmeme.helpers.SwipeStackAdapter;
+import com.example.entertainmeme.models.Meme;
 
 import link.fls.swipestack.SwipeStack;
 
@@ -27,18 +22,15 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     TextView titleTextView;
-    ImageView memeImageView;
     SwipeStack swipeStack;
     SwipeStackAdapter swipeStackAdapter;
+    MemeLoader memeLoader;
 
     Button previousBtn;
     Button skipBtn;
     Button likeBtn;
     Button inventoryBtn;
     Button topBtn;
-
-    Meme meme;
-    MemeLoader memeLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         final MemeDbHelper memeDbHelper = new MemeDbHelper(this);
 
         titleTextView = (TextView)findViewById(R.id.titleTextView);
-        memeImageView = (ImageView)findViewById(R.id.memeImageView);
         swipeStack = (SwipeStack) findViewById(R.id.swipeStack);
 
         previousBtn = (Button)findViewById(R.id.previousBtn);
@@ -68,16 +59,14 @@ public class MainActivity extends AppCompatActivity {
         previousBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                meme = memeLoader.getPrevious();
-                loadMeme();
+                swipeStack.swipeTopViewToLeft();
             }
         });
 
         skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                meme = memeLoader.getNext();
-                loadMeme();
+                swipeStack.swipeTopViewToLeft();
             }
         });
 
@@ -85,10 +74,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 swipeStackAdapter.notifyDataSetChanged();
-                //
-//                memeDbHelper.insertMeme(meme);
-//                meme = memeLoader.getNext();
-//                loadMeme();
             }
         });
 
@@ -100,26 +85,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        memeImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (meme == null) return;
-                Intent i = new Intent(MainActivity.this, MemeActivity.class);
-                i.putExtra("title", meme.getTitle());
-                i.putExtra("url", meme.getUrl());
-                startActivity(i);
-            }
-        });
-
         swipeStack.setListener(new SwipeStack.SwipeStackListener() {
             @Override
             public void onViewSwipedToLeft(int position) {
-
+                swipeStackAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onViewSwipedToRight(int position) {
-
+                memeDbHelper.insertMeme(memeLoader.getMeme(position));
+                swipeStackAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -130,24 +105,11 @@ public class MainActivity extends AppCompatActivity {
 
         memeLoader = new MemeLoader(MainActivity.this);
 
-        meme = memeLoader.getCurrent();
-
 
         swipeStackAdapter = new SwipeStackAdapter(memeLoader.getMemes(), MainActivity.this);
 
         swipeStack.setAdapter(swipeStackAdapter);
 
 
-    }
-
-    public void loadMeme() {
-        try {
-            titleTextView.setText(meme.getTitle());
-            memeImageView.setImageBitmap(meme.getImage());
-            DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-            Log.e(TAG, dateFormat.format(Calendar.getInstance().getTime()));
-        } catch (Exception e) {
-            Log.e(TAG, e.toString());
-        }
     }
 }
