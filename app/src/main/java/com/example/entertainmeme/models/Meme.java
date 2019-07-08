@@ -1,4 +1,4 @@
-package com.example.entertainmeme;
+package com.example.entertainmeme.model;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,6 +11,7 @@ import com.bumptech.glide.request.transition.Transition;
 public class Meme {
     private Context context;
 
+    // Attributes
     private int id;
     private String postLink;
     private String subreddit;
@@ -19,7 +20,7 @@ public class Meme {
     private Bitmap image;
     private String datetimeadded;
 
-    // Database
+    // Database table and column names
     public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS 'meme' ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `postLink` TEXT NOT NULL UNIQUE, `subreddit` TEXT NOT NULL, `title` TEXT NOT NULL, `url` TEXT NOT NULL, `datetimeadded` TEXT NOT NULL )";
     public static final String TABLE_NAME = "meme";
     public static final String C_ID = "id";
@@ -29,7 +30,7 @@ public class Meme {
     public static final String C_URL = "url";
     public static final String C_DATETIMEADDED = "datetimeadded";
 
-
+    // Constructor
     public Meme(Context c, String pl, String sr, String t, String u) {
         context = c;
         postLink = pl;
@@ -39,7 +40,7 @@ public class Meme {
         loadImage();
     }
 
-
+    // Constructor
     public Meme(int i, String pl, String sr, String t, String u, String d) {
         id = i;
         postLink = pl;
@@ -49,26 +50,32 @@ public class Meme {
         datetimeadded = d;
     }
 
+    // Get PostLink
     public String getPostLink() {
         return postLink;
     }
 
+    // Get Subreddit
     public String getSubreddit() {
         return subreddit;
     }
 
+    // Get Title
     public String getTitle() {
         return title;
     }
 
+    // Get URL
     public String getUrl() {
         return url;
     }
 
+    // Get Image
     public Bitmap getImage() {
         return image;
     }
 
+    // Load image
     public void loadImage() {
         if (url != null) {
             try {

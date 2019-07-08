@@ -1,17 +1,26 @@
-package com.example.entertainmeme;
+package com.example.entertainmeme.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.entertainmeme.helper.MemeLoader;
+import com.example.entertainmeme.R;
+import com.example.entertainmeme.Top100;
+import com.example.entertainmeme.helper.MemeDbHelper;
+import com.example.entertainmeme.helper.SwipeStackAdapter;
+import com.example.entertainmeme.model.Meme;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import link.fls.swipestack.SwipeStack;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     TextView titleTextView;
     ImageView memeImageView;
+    SwipeStack swipeStack;
+    SwipeStackAdapter swipeStackAdapter;
 
     Button previousBtn;
     Button skipBtn;
@@ -38,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         titleTextView = (TextView)findViewById(R.id.titleTextView);
         memeImageView = (ImageView)findViewById(R.id.memeImageView);
+        swipeStack = (SwipeStack) findViewById(R.id.swipeStack);
 
         previousBtn = (Button)findViewById(R.id.previousBtn);
         skipBtn = (Button)findViewById(R.id.skipBtn);
@@ -72,10 +84,11 @@ public class MainActivity extends AppCompatActivity {
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                memeDbHelper.insertMeme(meme);
-                meme = memeLoader.getNext();
-                loadMeme();
+                swipeStackAdapter.notifyDataSetChanged();
+                //
+//                memeDbHelper.insertMeme(meme);
+//                meme = memeLoader.getNext();
+//                loadMeme();
             }
         });
 
@@ -98,9 +111,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        swipeStack.setListener(new SwipeStack.SwipeStackListener() {
+            @Override
+            public void onViewSwipedToLeft(int position) {
+
+            }
+
+            @Override
+            public void onViewSwipedToRight(int position) {
+
+            }
+
+            @Override
+            public void onStackEmpty() {
+
+            }
+        });
+
         memeLoader = new MemeLoader(MainActivity.this);
 
         meme = memeLoader.getCurrent();
+
+
+        swipeStackAdapter = new SwipeStackAdapter(memeLoader.getMemes(), MainActivity.this);
+
+        swipeStack.setAdapter(swipeStackAdapter);
+
 
     }
 

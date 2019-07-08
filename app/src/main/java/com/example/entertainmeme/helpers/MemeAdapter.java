@@ -1,4 +1,4 @@
-package com.example.entertainmeme;
+package com.example.entertainmeme.helper;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.entertainmeme.R;
+import com.example.entertainmeme.model.Meme;
 
 import java.util.List;
 
@@ -40,17 +42,15 @@ public class MemeAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View itemview = convertView;
-
-        itemview = LayoutInflater.from(context).inflate(
+        convertView = LayoutInflater.from(context).inflate(
                         R.layout.meme_layout,
                         parent,
                         false
                 );
 
-        TextView titleTextView = (TextView)itemview.findViewById(R.id.titleTextView);
+        TextView titleTextView = (TextView)convertView.findViewById(R.id.titleTextView);
 
-        ImageView memeImageView = (ImageView)itemview.findViewById(R.id.memeImageView);
+        ImageView memeImageView = (ImageView)convertView.findViewById(R.id.memeImageView);
 
         titleTextView.setText(memeList.get(position).getTitle());
 
@@ -58,6 +58,6 @@ public class MemeAdapter extends BaseAdapter {
                 .load(memeList.get(position).getUrl())
                 .into(memeImageView);
 
-        return itemview;
+        return convertView;
     }
 }

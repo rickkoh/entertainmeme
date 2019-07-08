@@ -1,4 +1,4 @@
-package com.example.entertainmeme;
+package com.example.entertainmeme.helper;
 import android.content.Context;
 
 import com.android.volley.Request;
@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.entertainmeme.model.Meme;
 
 import org.json.JSONObject;
 
@@ -19,7 +20,7 @@ public class MemeLoader {
 
     private int pointer = 0;
 
-    List<Meme> memes = new ArrayList<Meme>();
+    private List<Meme> memes = new ArrayList<Meme>();
 
     public MemeLoader(Context c) {
         context = c;
@@ -39,12 +40,16 @@ public class MemeLoader {
 
     public Meme getNext() {
         pointer += 1;
-        if (pointer == 6 || pointer > 6) {
+        if (pointer >= 6) {
             pointer-=1;
             memes.remove(0);
             loadMemes();
         }
         return meme(pointer);
+    }
+
+    public List<Meme> getMemes() {
+        return memes;
     }
 
     private Meme meme(int pointer) {
