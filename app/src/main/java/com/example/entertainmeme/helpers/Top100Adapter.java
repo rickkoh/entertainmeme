@@ -1,4 +1,4 @@
-package com.example.entertainmeme;
+package com.example.entertainmeme.helpers;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.entertainmeme.R;
+import com.example.entertainmeme.models.TopMemes;
 
 import java.util.List;
 
@@ -17,9 +19,9 @@ public class Top100Adapter extends BaseAdapter
     Context context;
     List<TopMemes> TopMemeList;
 
-    public Top100Adapter(Context context,List<TopMemes> TopMemes){
+    public Top100Adapter(Context context,List<TopMemes> TopMeme){
         this.context= context;
-        TopMemeList= TopMemes;
+        TopMemeList= TopMeme;
     }
 
     @Override
@@ -42,16 +44,18 @@ public class Top100Adapter extends BaseAdapter
         View itemview=convertView;
 
         itemview= LayoutInflater.from(context).inflate(
-                R.layout.top_layout,
+                R.layout.meme_layout,
                 parent,
                 false
         );
 
-        TextView memeTitle= (TextView)itemview.findViewById(R.id.memeTitle);
-        ImageView TopMemeView =(ImageView)itemview.findViewById(R.id.TopMemeView);
+        TextView titleTextView= (TextView)itemview.findViewById(R.id.titleTextView);
+        ImageView memeImageView =(ImageView)itemview.findViewById(R.id.memeImageView);
+
+        titleTextView.setText(TopMemeList.get(position).getName());
 
         Glide.with(context).load(TopMemeList.get(position).getUrl())
-                .into(TopMemeView);
+                .into(memeImageView);
         return itemview;
     }
 }

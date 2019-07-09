@@ -10,6 +10,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.entertainmeme.models.Meme;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Queue;
 import java.util.Stack;
+
+import static android.content.ContentValues.TAG;
 
 // This class is a singleton class
 // It is responsible for handling the loading of memes
@@ -52,7 +55,8 @@ public class MemeLoader extends Observable {
     }
 
     public static MemeLoader getInstance() {
-        if (memeLoader == null) throw new IllegalStateException(MemeLoader.class.getSimpleName() + " is not initialized, call getInstance(...) first");
+        if (memeLoader == null)
+            throw new IllegalStateException(MemeLoader.class.getSimpleName() + " is not initialized, call getInstance(...) first");
         return memeLoader;
     }
 
@@ -112,4 +116,42 @@ public class MemeLoader extends Observable {
         requestQueue.add(stringRequest);
     }
 
+    public void loadTopMemes() {
+        String url = "https://api.imgflip.com/get_memes";
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.GET,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject j = new JSONObject(response);
+                            String data = j.getString("data");
+                            JSONObject d = new JSONObject(data);
+                            String m = d.getString("memes");
+                            JSONArray list = new JSONArray(m);
+
+                            for (int i = 0; i < list.length(); i++) {
+                                JSONObject object = list.getJSONObject(i);
+                                String id = object.getString("id");
+                                String name = object.getString("name");
+                                String url = object.getString("url");
+
+                            }
+                            Log.e(TAG, m);
+
+                            Log.e(TAG, response);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
+        requestQueue.add(stringRequest);
+
+    }
 }

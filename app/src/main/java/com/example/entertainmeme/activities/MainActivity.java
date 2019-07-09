@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.entertainmeme.helpers.MemeLoader;
 import com.example.entertainmeme.R;
-import com.example.entertainmeme.Top100;
 import com.example.entertainmeme.helpers.MemeDbHelper;
 import com.example.entertainmeme.helpers.SwipeStackAdapter;
 import com.example.entertainmeme.models.Meme;
@@ -66,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
                 swipeStackAdapter = new SwipeStackAdapter(MemeLoader.getInstance().getMemes(), MainActivity.this);
                 swipeStack.setAdapter(swipeStackAdapter);
                 swipeStackAdapter.notifyDataSetChanged();
+
             }
         });
 
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         inventoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, InventoryActivity.class);
+                Intent i = new Intent(MainActivity.this, com.example.entertainmeme.activities.InventoryActivity.class);
                 startActivity(i);
             }
         });
