@@ -1,4 +1,4 @@
-package com.example.entertainmeme.helper;
+package com.example.entertainmeme.helpers;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.entertainmeme.R;
-import com.example.entertainmeme.model.Meme;
+import com.example.entertainmeme.models.Meme;
 
 import java.util.List;
 

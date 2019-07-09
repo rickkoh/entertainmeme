@@ -15,16 +15,21 @@ import com.example.entertainmeme.helpers.MemeDbHelper;
 import com.example.entertainmeme.helpers.SwipeStackAdapter;
 import com.example.entertainmeme.models.Meme;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+
 import link.fls.swipestack.SwipeStack;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Observer {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
     TextView titleTextView;
     SwipeStack swipeStack;
     SwipeStackAdapter swipeStackAdapter;
-    MemeLoader memeLoader;
+    List<Meme> memes = new ArrayList<Meme>();
 
     Button previousBtn;
     Button skipBtn;
@@ -39,8 +44,14 @@ public class MainActivity extends AppCompatActivity {
 
         final MemeDbHelper memeDbHelper = new MemeDbHelper(this);
 
+        MemeLoader.getInstance(this);
+        MemeLoader.getInstance().addObserver(this);
+
+        swipeStackAdapter = new SwipeStackAdapter(memes, this);
+
         titleTextView = (TextView)findViewById(R.id.titleTextView);
         swipeStack = (SwipeStack) findViewById(R.id.swipeStack);
+        swipeStack.setAdapter(swipeStackAdapter);
 
         previousBtn = (Button)findViewById(R.id.previousBtn);
         skipBtn = (Button)findViewById(R.id.skipBtn);
@@ -51,8 +62,10 @@ public class MainActivity extends AppCompatActivity {
         topBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, Top100.class);
-                startActivity(i);
+                swipeStack = (SwipeStack)findViewById(R.id.swipeStack);
+                swipeStackAdapter = new SwipeStackAdapter(MemeLoader.getInstance().getMemes(), MainActivity.this);
+                swipeStack.setAdapter(swipeStackAdapter);
+                swipeStackAdapter.notifyDataSetChanged();
             }
         });
 
@@ -73,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MemeLoader.getInstance().getMeme();
                 swipeStackAdapter.notifyDataSetChanged();
             }
         });
@@ -88,28 +102,34 @@ public class MainActivity extends AppCompatActivity {
         swipeStack.setListener(new SwipeStack.SwipeStackListener() {
             @Override
             public void onViewSwipedToLeft(int position) {
-                swipeStackAdapter.notifyDataSetChanged();
+                MemeLoader.getInstance().getNext();
             }
 
             @Override
             public void onViewSwipedToRight(int position) {
-                memeDbHelper.insertMeme(memeLoader.getMeme(position));
-                swipeStackAdapter.notifyDataSetChanged();
+                // Save meme to database
+                memeDbHelper.insertMeme(MemeLoader.getInstance().getMeme());
+                MemeLoader.getInstance().getNext();
             }
 
             @Override
             public void onStackEmpty() {
-
+                MemeLoader.getInstance().getNext();
             }
         });
 
-        memeLoader = new MemeLoader(MainActivity.this);
+    }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        Log.d(TAG, MemeLoader.getInstance().getMemes().size() + " ML");
 
-        swipeStackAdapter = new SwipeStackAdapter(memeLoader.getMemes(), MainActivity.this);
+        Log.d(TAG, swipeStackAdapter.getCount() + " SSA");
 
+        List<Meme> memes = MemeLoader.getInstance().getMemes();
+        swipeStackAdapter = new SwipeStackAdapter(memes, this);
         swipeStack.setAdapter(swipeStackAdapter);
-
+        swipeStackAdapter.notifyDataSetChanged();
 
     }
 }

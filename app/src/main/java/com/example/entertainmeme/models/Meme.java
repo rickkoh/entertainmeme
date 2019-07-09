@@ -1,11 +1,10 @@
-package com.example.entertainmeme.model;
+package com.example.entertainmeme.models;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 
 public class Meme {
@@ -48,6 +47,13 @@ public class Meme {
         title = t;
         url = u;
         datetimeadded = d;
+    }
+
+    public Meme(String pl, String sr, String t, String u) {
+        postLink = pl;
+        subreddit = sr;
+        title = t;
+        url = u;
     }
 
     // Get PostLink

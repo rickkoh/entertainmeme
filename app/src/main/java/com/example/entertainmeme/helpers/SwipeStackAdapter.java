@@ -1,12 +1,15 @@
 package com.example.entertainmeme.helpers;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.entertainmeme.R;
 import com.example.entertainmeme.models.Meme;
 
@@ -20,6 +23,12 @@ public class SwipeStackAdapter extends BaseAdapter {
     public SwipeStackAdapter(List<Meme> memes, Context context) {
         this.memes = memes;
         this.context = context;
+    }
+
+    public void updateMemes(List<Meme> memes) {
+        this.memes.clear();
+        this.memes.addAll(memes);
+        this.notifyDataSetChanged();
     }
 
     @Override
@@ -41,10 +50,18 @@ public class SwipeStackAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        Log.d(null, position + " Adapter Position");
         convertView = LayoutInflater.from(context).inflate(R.layout.meme_card, parent, false);
+        ImageView memeImageView = (ImageView) convertView.findViewById(R.id.memeImageView);
 
-        ImageView memePhotoView = (ImageView) convertView.findViewById(R.id.memeImageView);
-        memePhotoView.setImageBitmap(memes.get(position).getImage());
+        try {
+            Glide.with(context)
+                    .asBitmap()
+                    .load(memes.get(position).getUrl())
+                    .into(memeImageView);
+        } catch (Exception e) {
+        }
+
 
         return convertView;
     }

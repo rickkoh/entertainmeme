@@ -1,4 +1,4 @@
-package com.example.entertainmeme.activity;
+package com.example.entertainmeme.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,10 +7,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.entertainmeme.helper.MemeAdapter;
+import com.example.entertainmeme.helpers.MemeAdapter;
 import com.example.entertainmeme.R;
-import com.example.entertainmeme.helper.MemeDbHelper;
-import com.example.entertainmeme.model.Meme;
+import com.example.entertainmeme.helpers.MemeDbHelper;
+import com.example.entertainmeme.models.Meme;
 
 import java.util.List;
 
