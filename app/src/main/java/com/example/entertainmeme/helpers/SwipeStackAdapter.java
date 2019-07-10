@@ -26,8 +26,7 @@ public class SwipeStackAdapter extends BaseAdapter {
     }
 
     public void updateMemes(List<Meme> memes) {
-        this.memes.clear();
-        this.memes.addAll(memes);
+        this.memes = memes;
         this.notifyDataSetChanged();
     }
 
@@ -38,8 +37,9 @@ public class SwipeStackAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public Meme getItem(int position) {
+        if (memes == null || position >= memes.size()) return null;
+        return memes.get(position);
     }
 
     @Override
@@ -50,7 +50,6 @@ public class SwipeStackAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Log.d(null, position + " Adapter Position");
         convertView = LayoutInflater.from(context).inflate(R.layout.meme_card, parent, false);
         ImageView memeImageView = (ImageView) convertView.findViewById(R.id.memeImageView);
 
@@ -61,7 +60,6 @@ public class SwipeStackAdapter extends BaseAdapter {
                     .into(memeImageView);
         } catch (Exception e) {
         }
-
 
         return convertView;
     }

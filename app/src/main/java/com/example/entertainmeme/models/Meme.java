@@ -54,6 +54,7 @@ public class Meme {
         subreddit = sr;
         title = t;
         url = u;
+        loadImage();
     }
 
     // Get PostLink

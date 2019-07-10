@@ -10,12 +10,10 @@ import android.widget.TextView;
 
 import com.example.entertainmeme.helpers.MemeLoader;
 import com.example.entertainmeme.R;
-import com.example.entertainmeme.Top100;
 import com.example.entertainmeme.helpers.MemeDbHelper;
 import com.example.entertainmeme.helpers.SwipeStackAdapter;
 import com.example.entertainmeme.models.Meme;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -29,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
     TextView titleTextView;
     SwipeStack swipeStack;
     SwipeStackAdapter swipeStackAdapter;
-    List<Meme> memes = new ArrayList<Meme>();
+    Boolean swipeLocked = true;
 
     Button previousBtn;
     Button skipBtn;
@@ -47,10 +45,9 @@ public class MainActivity extends AppCompatActivity implements Observer {
         MemeLoader.getInstance(this);
         MemeLoader.getInstance().addObserver(this);
 
-        swipeStackAdapter = new SwipeStackAdapter(memes, this);
-
         titleTextView = (TextView)findViewById(R.id.titleTextView);
         swipeStack = (SwipeStack) findViewById(R.id.swipeStack);
+        swipeStackAdapter = new SwipeStackAdapter(MemeLoader.getInstance().getMemes(), this);
         swipeStack.setAdapter(swipeStackAdapter);
 
         previousBtn = (Button)findViewById(R.id.previousBtn);
@@ -62,9 +59,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         topBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                swipeStack = (SwipeStack)findViewById(R.id.swipeStack);
-                swipeStackAdapter = new SwipeStackAdapter(MemeLoader.getInstance().getMemes(), MainActivity.this);
-                swipeStack.setAdapter(swipeStackAdapter);
+                Log.d(TAG, swipeStack.getCurrentPosition() + "");
                 swipeStackAdapter.notifyDataSetChanged();
             }
         });
@@ -72,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements Observer {
         previousBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                swipeStack.swipeTopViewToLeft();
             }
         });
 
@@ -86,8 +80,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MemeLoader.getInstance().getMeme();
-                swipeStackAdapter.notifyDataSetChanged();
+                swipeStack.swipeTopViewToRight();
             }
         });
 
@@ -102,19 +95,36 @@ public class MainActivity extends AppCompatActivity implements Observer {
         swipeStack.setListener(new SwipeStack.SwipeStackListener() {
             @Override
             public void onViewSwipedToLeft(int position) {
-                MemeLoader.getInstance().getNext();
+                Log.d(TAG, "Swiped left");
+                MemeLoader.loadMore();
             }
 
             @Override
             public void onViewSwipedToRight(int position) {
-                // Save meme to database
-                memeDbHelper.insertMeme(MemeLoader.getInstance().getMeme());
-                MemeLoader.getInstance().getNext();
+                Log.d(TAG, "Swiped right");
+                memeDbHelper.insertMeme(swipeStackAdapter.getItem(position));
+                MemeLoader.loadMore();
             }
 
             @Override
             public void onStackEmpty() {
-                MemeLoader.getInstance().getNext();
+            }
+        });
+
+        swipeStack.setSwipeProgressListener(new SwipeStack.SwipeProgressListener() {
+            @Override
+            public void onSwipeStart(int position) {
+                swipeLocked = false;
+            }
+
+            @Override
+            public void onSwipeProgress(int position, float progress) {
+                swipeLocked = false;
+            }
+
+            @Override
+            public void onSwipeEnd(int position) {
+                swipeLocked = true;
             }
         });
 
@@ -122,14 +132,8 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        Log.d(TAG, MemeLoader.getInstance().getMemes().size() + " ML");
 
-        Log.d(TAG, swipeStackAdapter.getCount() + " SSA");
-
-        List<Meme> memes = MemeLoader.getInstance().getMemes();
-        swipeStackAdapter = new SwipeStackAdapter(memes, this);
-        swipeStack.setAdapter(swipeStackAdapter);
-        swipeStackAdapter.notifyDataSetChanged();
+        if (swipeLocked) swipeStackAdapter.notifyDataSetChanged();
 
     }
 }
