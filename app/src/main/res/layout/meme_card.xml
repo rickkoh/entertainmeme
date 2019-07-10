@@ -9,7 +9,7 @@
             android:id="@+id/memeImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="50dp"
+            android:background="#ccc"
             tools:srcCompat="@tools:sample/avatars" />
 
 </android.support.constraint.ConstraintLayout>
