@@ -15,13 +15,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="10"
-            android:orientation="horizontal"></LinearLayout>
-
-        <LinearLayout
-            android:layout_weight="75"
+            android:layout_weight="85"
             android:weightSum="100"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -55,7 +49,7 @@
                 android:layout_weight="90"
                 android:layout_above="@+id/buttonSwipeLeft"
                 app:stack_rotation="0"
-                app:stack_size="2"
+                app:stack_size="10"
                 app:stack_spacing="0dp"/>
 
         </LinearLayout>
