@@ -58,14 +58,8 @@ public class MainActivity extends AppCompatActivity implements Observer {
         inventoryBtn = (ImageButton)findViewById(R.id.inventoryBtn);
 
 
-        topBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, swipeStack.getCurrentPosition() + "");
-                swipeStackAdapter.notifyDataSetChanged();
 
-            }
-        });
+
 
         previousBtn.setOnClickListener(new View.OnClickListener() {
             @Override
