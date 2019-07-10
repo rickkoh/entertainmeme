@@ -12,9 +12,7 @@ import com.example.entertainmeme.helpers.MemeLoader;
 import com.example.entertainmeme.R;
 import com.example.entertainmeme.helpers.MemeDbHelper;
 import com.example.entertainmeme.helpers.SwipeStackAdapter;
-import com.example.entertainmeme.models.Meme;
 
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -27,24 +25,27 @@ public class MainActivity extends AppCompatActivity implements Observer {
     TextView titleTextView;
     SwipeStack swipeStack;
     SwipeStackAdapter swipeStackAdapter;
-    Boolean swipeLocked = true;
+    static Boolean swipeLocked = false;
 
     Button previousBtn;
     Button skipBtn;
     Button likeBtn;
     Button inventoryBtn;
-    Button topBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Create an instance of database
         final MemeDbHelper memeDbHelper = new MemeDbHelper(this);
 
+        // Access MemeLoader class
         MemeLoader.getInstance(this);
+        // Register as an observer
         MemeLoader.getInstance().addObserver(this);
 
+        // Variables
         titleTextView = (TextView)findViewById(R.id.titleTextView);
         swipeStack = (SwipeStack) findViewById(R.id.swipeStack);
         swipeStackAdapter = new SwipeStackAdapter(MemeLoader.getInstance().getMemes(), this);
@@ -54,17 +55,8 @@ public class MainActivity extends AppCompatActivity implements Observer {
         skipBtn = (Button)findViewById(R.id.skipBtn);
         likeBtn = (Button)findViewById(R.id.likeBtn);
         inventoryBtn = (Button)findViewById(R.id.inventoryBtn);
-        topBtn=(Button)findViewById(R.id.topBtn);
 
-        topBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, swipeStack.getCurrentPosition() + "");
-                swipeStackAdapter.notifyDataSetChanged();
-
-            }
-        });
-
+        // Listeners
         previousBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,45 +88,49 @@ public class MainActivity extends AppCompatActivity implements Observer {
         swipeStack.setListener(new SwipeStack.SwipeStackListener() {
             @Override
             public void onViewSwipedToLeft(int position) {
-                Log.d(TAG, "Swiped left");
-                MemeLoader.loadMore();
+                Log.d(TAG, "Swiped Left");
+                MemeLoader.offloadMeme();
             }
 
             @Override
             public void onViewSwipedToRight(int position) {
-                Log.d(TAG, "Swiped right");
+                Log.d(TAG, "Swiped Right");
+                // Save meme to database
                 memeDbHelper.insertMeme(swipeStackAdapter.getItem(position));
-                MemeLoader.loadMore();
+                MemeLoader.offloadMeme();
             }
 
             @Override
             public void onStackEmpty() {
+                swipeStackAdapter.notifyDataSetChanged();
             }
         });
 
         swipeStack.setSwipeProgressListener(new SwipeStack.SwipeProgressListener() {
             @Override
             public void onSwipeStart(int position) {
-                swipeLocked = false;
+                swipeLocked = true;
             }
 
             @Override
             public void onSwipeProgress(int position, float progress) {
-                swipeLocked = false;
+                swipeLocked = true;
             }
 
             @Override
             public void onSwipeEnd(int position) {
-                swipeLocked = true;
+                swipeLocked = false;
             }
         });
-
     }
 
     @Override
     public void update(Observable o, Object arg) {
 
-        if (swipeLocked) swipeStackAdapter.notifyDataSetChanged();
+        // Update data if user is not swiping the meme
+        if (!swipeLocked) swipeStackAdapter.notifyDataSetChanged();
+
+        Log.d(TAG, MemeLoader.getInstance().getNoOfPreloadedMemes() + "");
 
     }
 }
