@@ -1,11 +1,13 @@
 package com.example.entertainmeme.activities;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.entertainmeme.helpers.MemeLoader;
@@ -29,11 +31,11 @@ public class MainActivity extends AppCompatActivity implements Observer {
     SwipeStackAdapter swipeStackAdapter;
     Boolean swipeLocked = true;
 
-    Button previousBtn;
-    Button skipBtn;
-    Button likeBtn;
-    Button inventoryBtn;
-    Button topBtn;
+    ImageButton skipBtn;
+    ImageButton likeBtn;
+    ImageButton inventoryBtn;
+    ImageButton previousBtn;
+    ImageButton topBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +52,11 @@ public class MainActivity extends AppCompatActivity implements Observer {
         swipeStackAdapter = new SwipeStackAdapter(MemeLoader.getInstance().getMemes(), this);
         swipeStack.setAdapter(swipeStackAdapter);
 
-        previousBtn = (Button)findViewById(R.id.previousBtn);
-        skipBtn = (Button)findViewById(R.id.skipBtn);
-        likeBtn = (Button)findViewById(R.id.likeBtn);
-        inventoryBtn = (Button)findViewById(R.id.inventoryBtn);
-        topBtn=(Button)findViewById(R.id.topBtn);
+        previousBtn = (ImageButton)findViewById(R.id.previousBtn);
+        skipBtn = (ImageButton)findViewById(R.id.skipBtn);
+        likeBtn = (ImageButton)findViewById(R.id.likeBtn);
+        inventoryBtn = (ImageButton)findViewById(R.id.inventoryBtn);
+
 
         topBtn.setOnClickListener(new View.OnClickListener() {
             @Override
