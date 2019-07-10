@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements Observer {
         previousBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                swipeStackAdapter.back();
+                swipeStack.resetStack();
             }
         });
 
@@ -90,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
             public void onViewSwipedToLeft(int position) {
                 Log.d(TAG, "Swiped Left");
                 MemeLoader.offloadMeme();
+                swipeStackAdapter.next();
             }
 
             @Override
@@ -98,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
                 // Save meme to database
                 memeDbHelper.insertMeme(swipeStackAdapter.getItem(position));
                 MemeLoader.offloadMeme();
+                swipeStackAdapter.next();
             }
 
             @Override
