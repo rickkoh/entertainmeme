@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Top100"
+        <activity android:name=".activities.Top100"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activities.MainActivity"

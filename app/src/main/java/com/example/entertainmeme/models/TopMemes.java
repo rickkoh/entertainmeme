@@ -1,11 +1,10 @@
-package com.example.entertainmeme;
+package com.example.entertainmeme.models;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 
 public class TopMemes {

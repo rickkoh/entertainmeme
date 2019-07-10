@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
             public void onClick(View view) {
                 Log.d(TAG, swipeStack.getCurrentPosition() + "");
                 swipeStackAdapter.notifyDataSetChanged();
+
             }
         });
 
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         inventoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, InventoryActivity.class);
+                Intent i = new Intent(MainActivity.this, com.example.entertainmeme.activities.InventoryActivity.class);
                 startActivity(i);
             }
         });

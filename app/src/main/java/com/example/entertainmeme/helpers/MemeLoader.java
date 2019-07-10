@@ -10,6 +10,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.entertainmeme.models.Meme;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Queue;
 import java.util.Stack;
+
+import static android.content.ContentValues.TAG;
 
 // This class is a singleton class
 // It is responsible for handling the loading of memes
@@ -51,7 +54,8 @@ public class MemeLoader extends Observable {
 
     // Get instance of MemeLoader
     public static MemeLoader getInstance() {
-        if (memeLoader == null) throw new IllegalStateException(MemeLoader.class.getSimpleName() + " is not initialized, call getInstance(...) first");
+        if (memeLoader == null)
+            throw new IllegalStateException(MemeLoader.class.getSimpleName() + " is not initialized, call getInstance(...) first");
         return memeLoader;
     }
 
@@ -92,7 +96,7 @@ public class MemeLoader extends Observable {
                 });
         requestQueue.add(stringRequest);
     }
-
+    
     public List<Meme> getMemes() {
         return memes;
     }

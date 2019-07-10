@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MemeDbHelper extends SQLiteOpenHelper {
+public class    MemeDbHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "MemeDbHelper";
     private static final String dbName = "MemeDb";

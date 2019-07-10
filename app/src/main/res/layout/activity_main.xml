@@ -81,7 +81,7 @@
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/round_button"
-                android:text="TOP 100"
+                android:text="Test Button"
                 android:textColor="#000000"
                 tools:layout_editor_absoluteX="305dp"
                 tools:layout_editor_absoluteY="69dp" />
