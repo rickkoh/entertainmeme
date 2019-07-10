@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@color/white"
     tools:context=".activities.MainActivity">
-
-
 
     <LinearLayout
         android:weightSum="100"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/lightgrey"
         android:orientation="vertical">
 
         <LinearLayout
@@ -23,23 +22,25 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10"
                 android:orientation="horizontal">
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Title: "
-                    android:textStyle="bold" />
+                <ImageButton
+                    android:id="@+id/inventoryBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="350dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/round_button"
+                    android:padding="5dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/box" />
 
-
-                <TextView
-                    android:id="@+id/titleTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -49,6 +50,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="90"
                 android:layout_above="@+id/buttonSwipeLeft"
+                android:background="@color/white"
                 app:stack_rotation="0"
                 app:stack_size="10"
                 app:stack_spacing="0dp"/>
@@ -59,48 +61,49 @@
             android:layout_weight="15"
             android:gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="5dp"
             android:orientation="horizontal"
+            android:background="@color/lightgrey"
+
             android:weightSum="100">
 
-            <Button
+            <ImageButton
                 android:id="@+id/previousBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="25"
-                android:text="Previous" />
-
-            <Button
-                android:id="@+id/skipBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="25"
-                android:text="Skip" />
-            <Button
-                android:id="@+id/topBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:background="@drawable/round_button"
-                android:text="Test Button"
-                android:textColor="#000000"
-                tools:layout_editor_absoluteX="305dp"
-                tools:layout_editor_absoluteY="69dp" />
+                android:src="@drawable/back"
+                android:scaleType="fitXY"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="70dp"
+                 />
 
 
-            <Button
+
+
+            <ImageButton
                 android:id="@+id/likeBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="23"
-                android:text="Like" />
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/round_button"
+                android:src="@drawable/heart"
+                android:scaleType="fitXY"
+                android:padding="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                 />
+            <ImageButton
+                android:id="@+id/skipBtn"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/round_button"
+                android:src="@drawable/front"
+                android:layout_marginRight="70dp"
+                android:layout_marginLeft="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                 />
 
-            <Button
-                android:id="@+id/inventoryBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="28"
-                android:text="Inventory" />
 
 
         </LinearLayout>
