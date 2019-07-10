@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.entertainmeme.R;
@@ -66,7 +67,10 @@ public class SwipeStackAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         convertView = LayoutInflater.from(context).inflate(R.layout.meme_card, parent, false);
+        TextView titleTextView = (TextView) convertView.findViewById(R.id.titleTextView);
         ImageView memeImageView = (ImageView) convertView.findViewById(R.id.memeImageView);
+
+        titleTextView.setText(memes.get(position).getTitle());
 
         try {
             Glide.with(context)

@@ -1,15 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/radius"
+    android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/memeImageView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ccc"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:weightSum="100"
+            android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/titleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="10"
+                    android:textColor="@color/black"
+                    android:text="TextView" />
+
+                <ImageView
+                    android:id="@+id/memeImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="90"
+                    tools:srcCompat="@tools:sample/avatars" />
+        </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

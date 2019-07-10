@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_weight="85"
+            android:layout_weight="90"
             android:weightSum="100"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -25,6 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10"
+                android:background="@color/colorPrimary"
                 android:orientation="horizontal">
 
 
@@ -50,21 +51,23 @@
                 android:layout_height="0dp"
                 android:layout_weight="90"
                 android:layout_above="@+id/buttonSwipeLeft"
-                android:background="@color/white"
+                android:padding="20dp"
                 app:stack_rotation="0"
                 app:stack_size="10"
-                app:stack_spacing="0dp"/>
+                app:stack_spacing="0dp"
+                app:swipe_opacity="0.9"
+                app:disable_hw_acceleration="true">
+
+            </link.fls.swipestack.SwipeStack>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_weight="15"
+            android:layout_weight="10"
             android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:orientation="horizontal"
-            android:background="@color/lightgrey"
-
             android:weightSum="100">
 
             <ImageButton
@@ -78,9 +81,6 @@
                 android:layout_marginLeft="70dp"
                  />
 
-
-
-
             <ImageButton
                 android:id="@+id/likeBtn"
                 android:layout_width="80dp"
@@ -92,6 +92,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                  />
+
             <ImageButton
                 android:id="@+id/skipBtn"
                 android:layout_width="80dp"
@@ -103,8 +104,6 @@
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
                  />
-
-
 
         </LinearLayout>
     </LinearLayout>
