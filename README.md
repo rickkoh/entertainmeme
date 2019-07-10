@@ -12,6 +12,10 @@ PhotoView
 Used for image viewing
 https://github.com/chrisbanes/PhotoView
 
+SwipeStack
+Used for swiping memes
+https://github.com/flschweiger/SwipeStack
+
 SQLite
 Used for storing data locally
 https://developer.android.com/training/data-storage/sqlite
@@ -22,8 +26,3 @@ Meme-api
 Random Generator
 https://meme-api.herokuapp.com/
 https://meme-api.herokuapp.com/gimme
-
-Imgflip
-Top 100 in the last 30 days
-https://api.imgflip.com/
-https://api.imgflip.com/get_memes
