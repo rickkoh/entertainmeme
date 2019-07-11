@@ -125,7 +125,13 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
             @Override
             public void onSwipeEnd(int position) {
-                swipeLocked = false;
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeLocked = false;
+                    }
+                }, 300);
             }
         });
     }
