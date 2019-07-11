@@ -51,9 +51,13 @@ public class MemeLoader extends Observable {
     }
 
     //
-    public static void offloadMeme() {
+    public static void decreasePreloadedMemesCount() {
         if (noOfPreloadedMemes > 0) noOfPreloadedMemes-=1;
         memeLoader.loadMemes();
+    }
+
+    public static void increasePreloadedMemesCount() {
+        noOfPreloadedMemes+=1;
     }
 
     // Return memes
