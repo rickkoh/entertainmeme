@@ -40,7 +40,7 @@
                     android:background="@drawable/round_button"
                     android:padding="5dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/box" />
+                    android:src="@drawable/star" />
 
 
             </LinearLayout>
@@ -61,6 +61,10 @@
             </link.fls.swipestack.SwipeStack>
 
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"/>
 
         <LinearLayout
             android:layout_weight="10"
@@ -68,42 +72,44 @@
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:elevation="5dp"
             android:weightSum="100">
 
             <ImageButton
                 android:id="@+id/previousBtn"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:background="@drawable/round_button"
                 android:src="@drawable/back"
-                android:scaleType="fitXY"
+                android:layout_marginLeft="100dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginLeft="70dp"
-                 />
+                android:scaleType="fitXY"
+                android:elevation="20dp" />
 
             <ImageButton
                 android:id="@+id/likeBtn"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/round_button"
-                android:src="@drawable/heart"
-                android:scaleType="fitXY"
-                android:padding="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_marginLeft="10dp"
-                 />
+                android:layout_marginRight="10dp"
+                android:background="@drawable/round_button"
+                android:padding="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/heart"
+                android:elevation="20dp" />
 
             <ImageButton
                 android:id="@+id/skipBtn"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/round_button"
-                android:src="@drawable/front"
-                android:layout_marginRight="70dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:adjustViewBounds="true"
+                android:background="@drawable/round_button"
                 android:scaleType="fitXY"
-                 />
+                android:src="@drawable/front"
+                android:elevation="20dp" />
 
         </LinearLayout>
     </LinearLayout>
