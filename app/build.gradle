@@ -28,6 +28,6 @@ dependencies {
     implementation 'com.android.volley:volley:1.1.1'
     implementation 'com.github.bumptech.glide:glide:4.0.0-RC0'
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
-    implementation 'link.fls:swipestack:0.3.0'
+    implementation 'com.geeksynergy:swipestack:1.0.1'
     implementation 'com.wang.avi:library:2.1.3'
 }

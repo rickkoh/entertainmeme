@@ -56,6 +56,7 @@ public class MemeLoader extends Observable {
         memeLoader.loadMemes();
     }
 
+    //
     public static void increasePreloadedMemesCount() {
         noOfPreloadedMemes+=1;
     }
@@ -71,8 +72,8 @@ public class MemeLoader extends Observable {
 
     // Load memes from API
     private void loadMemes() {
-        String url = "https://meme-api.herokuapp.com/gimme";
         if (noOfPreloadedMemes >= 10) return;
+        String url = "https://meme-api.herokuapp.com/gimme";
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET,
                 url,

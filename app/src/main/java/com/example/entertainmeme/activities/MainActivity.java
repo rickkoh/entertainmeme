@@ -13,7 +13,6 @@ import com.example.entertainmeme.helpers.MemeLoader;
 import com.example.entertainmeme.R;
 import com.example.entertainmeme.helpers.MemeDbHelper;
 import com.example.entertainmeme.helpers.SwipeStackAdapter;
-import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -91,6 +90,14 @@ public class MainActivity extends AppCompatActivity implements Observer {
         });
 
         swipeStack.setListener(new SwipeStack.SwipeStackListener() {
+            @Override
+            public void onClick(int position) {
+                Intent i = new Intent(MainActivity.this, MemeActivity.class);
+                i.putExtra("title", swipeStackAdapter.getItem(position).getTitle());
+                i.putExtra("url", swipeStackAdapter.getItem(position).getUrl());
+                startActivity(i);
+            }
+
             @Override
             public void onViewSwipedToLeft(int position) {
                 Log.d(TAG, "Swiped Left");

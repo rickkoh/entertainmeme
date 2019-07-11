@@ -29,5 +29,6 @@ task clean(type: Delete) {
 allprojects {
     repositories {
         maven { url "https://jitpack.io" }
+        maven { url "http://dl.bintray.com/geeksynergy/GeekSupport" }
     }
 }
