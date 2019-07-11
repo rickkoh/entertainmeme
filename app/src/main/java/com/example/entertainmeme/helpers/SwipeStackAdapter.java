@@ -1,7 +1,6 @@
 package com.example.entertainmeme.helpers;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,42 +18,48 @@ import java.util.List;
 
 public class SwipeStackAdapter extends BaseAdapter {
 
+    private int start = 0;
+    private int pointer = 0;
+    private Boolean forward = false;
     private List<Meme> memes;
-    private List<Meme> deletedMemes;
     private Context context;
 
     public SwipeStackAdapter(List<Meme> memes, Context context) {
         this.memes = memes;
-        deletedMemes = new ArrayList<Meme>();
         this.context = context;
     }
 
-    public void updateMemes(List<Meme> memes) {
-        this.memes = memes;
-        this.notifyDataSetChanged();
+    public List<Meme> updateMemes() {
+        List<Meme> stackMemes = new ArrayList<Meme>();
+        if (memes != null && !memes.isEmpty()) {
+            if (forward) stackMemes = memes.subList(start, memes.size());
+            else stackMemes = memes.subList(pointer, memes.size());
+        }
+        return stackMemes;
     }
 
     public void back() {
-        if (deletedMemes.size() <= 0) return;
-        memes.add(0, deletedMemes.get(deletedMemes.size()-1));
-        deletedMemes.remove(deletedMemes.size()-1);
+        if (pointer <= 0) return;
+        pointer-=1;
+        start = pointer;
+        forward = false;
     }
 
     public void next() {
-        deletedMemes.add(memes.get(0));
-        memes.remove(0);
+        pointer+=1;
+        forward = true;
     }
 
     @Override
     public int getCount() {
-        if (memes == null) return 0;
-        return memes.size();
+        if (updateMemes() == null) return 0;
+        return updateMemes().size();
     }
 
     @Override
     public Meme getItem(int position) {
-        if (memes == null || position >= memes.size()) return null;
-        return memes.get(position);
+        if (updateMemes() == null || position >= memes.size()) return null;
+        return updateMemes().get(position);
     }
 
     @Override
@@ -70,12 +75,12 @@ public class SwipeStackAdapter extends BaseAdapter {
         TextView titleTextView = (TextView) convertView.findViewById(R.id.titleTextView);
         ImageView memeImageView = (ImageView) convertView.findViewById(R.id.memeImageView);
 
-        titleTextView.setText(memes.get(position).getTitle());
+        titleTextView.setText(updateMemes().get(position).getTitle());
 
         try {
             Glide.with(context)
                     .asBitmap()
-                    .load(memes.get(position).getUrl())
+                    .load(updateMemes().get(position).getUrl())
                     .into(memeImageView);
         } catch (Exception e) {
         }

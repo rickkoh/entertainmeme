@@ -2,6 +2,7 @@ package com.example.entertainmeme.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
             public void onClick(View v) {
                 swipeStackAdapter.back();
                 swipeStack.resetStack();
+                MemeLoader.getInstance().increasePreloadedMemesCount();
             }
         });
 
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
             @Override
             public void onViewSwipedToLeft(int position) {
                 Log.d(TAG, "Swiped Left");
-                MemeLoader.offloadMeme();
+                MemeLoader.decreasePreloadedMemesCount();
                 swipeStackAdapter.next();
             }
 
@@ -100,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
                 Log.d(TAG, "Swiped Right");
                 // Save meme to database
                 memeDbHelper.insertMeme(swipeStackAdapter.getItem(position));
-                MemeLoader.offloadMeme();
+                MemeLoader.decreasePreloadedMemesCount();
                 swipeStackAdapter.next();
             }
 
