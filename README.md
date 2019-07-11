@@ -16,6 +16,10 @@ SwipeStack
 Used for swiping memes
 https://github.com/flschweiger/SwipeStack
 
+AVLoadingIndicatorView
+Used to indicate loading
+https://github.com/81813780/AVLoadingIndicatorView
+
 SQLite
 Used for storing data locally
 https://developer.android.com/training/data-storage/sqlite

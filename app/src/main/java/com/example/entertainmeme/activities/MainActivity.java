@@ -13,6 +13,7 @@ import com.example.entertainmeme.helpers.MemeLoader;
 import com.example.entertainmeme.R;
 import com.example.entertainmeme.helpers.MemeDbHelper;
 import com.example.entertainmeme.helpers.SwipeStackAdapter;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
     TextView titleTextView;
     SwipeStack swipeStack;
     SwipeStackAdapter swipeStackAdapter;
-    static Boolean swipeLocked = false;
+    static Boolean swipeLock = false;
 
     ImageButton previousBtn;
     ImageButton skipBtn;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
         // Variables
         titleTextView = (TextView)findViewById(R.id.titleTextView);
-        swipeStack = (SwipeStack) findViewById(R.id.swipeStack);
+        swipeStack = (SwipeStack)findViewById(R.id.swipeStack);
         swipeStackAdapter = new SwipeStackAdapter(MemeLoader.getInstance().getMemes(), this);
         swipeStack.setAdapter(swipeStackAdapter);
 
@@ -115,12 +116,12 @@ public class MainActivity extends AppCompatActivity implements Observer {
         swipeStack.setSwipeProgressListener(new SwipeStack.SwipeProgressListener() {
             @Override
             public void onSwipeStart(int position) {
-                swipeLocked = true;
+                swipeLock = true;
             }
 
             @Override
             public void onSwipeProgress(int position, float progress) {
-                swipeLocked = true;
+                swipeLock = true;
             }
 
             @Override
@@ -129,9 +130,9 @@ public class MainActivity extends AppCompatActivity implements Observer {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        swipeLocked = false;
+                        swipeLock = false;
                     }
-                }, 300);
+                }, 500);
             }
         });
     }
@@ -140,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
     public void update(Observable o, Object arg) {
 
         // Update data if user is not swiping the meme
-        if (!swipeLocked) swipeStackAdapter.notifyDataSetChanged();
+        if (!swipeLock) swipeStackAdapter.notifyDataSetChanged();
 
         Log.d(TAG, MemeLoader.getInstance().getNoOfPreloadedMemes() + "");
 
