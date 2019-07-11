@@ -1,7 +1,6 @@
 package com.example.entertainmeme.helpers;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,7 @@ public class SwipeStackAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public List<Meme> updateMemes() {
+    public List<Meme> getMemes() {
         List<Meme> stackMemes = new ArrayList<Meme>();
         if (memes != null && !memes.isEmpty()) {
             if (forward) stackMemes = memes.subList(start, memes.size());
@@ -52,19 +51,18 @@ public class SwipeStackAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (updateMemes() == null) return 0;
-        return updateMemes().size();
+        if (getMemes() == null) return 0;
+        return getMemes().size();
     }
 
     @Override
     public Meme getItem(int position) {
-        if (updateMemes() == null || position >= memes.size()) return null;
-        return updateMemes().get(position);
+        if (getMemes() == null || position >= memes.size()) return null;
+        return getMemes().get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        Log.d(null, "id getting");
         return 0;
     }
 
@@ -75,12 +73,12 @@ public class SwipeStackAdapter extends BaseAdapter {
         TextView titleTextView = (TextView) convertView.findViewById(R.id.titleTextView);
         ImageView memeImageView = (ImageView) convertView.findViewById(R.id.memeImageView);
 
-        titleTextView.setText(updateMemes().get(position).getTitle());
+        titleTextView.setText(getMemes().get(position).getTitle());
 
         try {
             Glide.with(context)
                     .asBitmap()
-                    .load(updateMemes().get(position).getUrl())
+                    .load(getMemes().get(position).getUrl())
                     .into(memeImageView);
         } catch (Exception e) {
         }
