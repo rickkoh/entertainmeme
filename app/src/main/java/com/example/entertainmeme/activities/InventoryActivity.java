@@ -2,13 +2,19 @@ package com.example.entertainmeme.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.entertainmeme.helpers.MemeAdapter;
 import com.example.entertainmeme.R;
+import com.example.entertainmeme.helpers.MemeAdapter;
 import com.example.entertainmeme.helpers.MemeDbHelper;
 import com.example.entertainmeme.models.Meme;
 
@@ -16,7 +22,8 @@ import java.util.List;
 
 public class InventoryActivity extends AppCompatActivity {
 
-    ListView memeListView;
+    RecyclerView memeListView;
+    RecyclerView.LayoutManager layoutManager;
     List<Meme> memes;
 
     @Override
@@ -28,26 +35,14 @@ public class InventoryActivity extends AppCompatActivity {
 
         memes = memeDbHelper.getAllMemes();
 
-        memeListView = (ListView)findViewById(R.id.memeListView);
+        memeListView = (RecyclerView)findViewById(R.id.memeListView);
+        layoutManager = new LinearLayoutManager(this);
+        memeListView.setLayoutManager(layoutManager);
 
         final MemeAdapter memeAdapter = new MemeAdapter(this, memes);
 
         memeListView.setAdapter(memeAdapter);
 
-        memeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent i = new Intent(InventoryActivity.this, MemeActivity.class);
-                i.putExtra("title", memes.get(position).getTitle());
-                i.putExtra("url", memes.get(position).getUrl());
-                startActivity(i);
-
-                // Remove item from the list
-                //memes.remove(position);
-                // Update the adapter
-                //memeAdapter.notifyDataSetChanged();
-            }
-        });
+        memeListView.addOnItemTouchListener(new RecyclerItem);
     }
 }
