@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
                     public void run() {
                         swipeLock = false;
                     }
-                }, 500);
+                }, 300);
             }
         });
     }
