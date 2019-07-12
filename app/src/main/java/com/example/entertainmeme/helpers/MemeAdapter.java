@@ -92,10 +92,14 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.titleTextView.setText(memes.get(position).getTitle());
 
-        Glide.with(context)
+        if (memes.get(position).getImage() == null) {
+            Glide.with(context)
                 .load(memes.get(position).getUrl())
                 .into(holder.memeImageView);
-
+            memes.get(position).loadImage();
+        } else {
+            holder.memeImageView.setImageBitmap(memes.get(position).getImage());
+        }
     }
 
     @Override

@@ -47,6 +47,7 @@ public class Meme {
         title = t;
         url = u;
         datetimeadded = d;
+        loadImage();
     }
 
     public Meme(String pl, String sr, String t, String u) {
