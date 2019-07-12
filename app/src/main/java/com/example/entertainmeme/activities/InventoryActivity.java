@@ -42,7 +42,5 @@ public class InventoryActivity extends AppCompatActivity {
         final MemeAdapter memeAdapter = new MemeAdapter(this, memes);
 
         memeListView.setAdapter(memeAdapter);
-
-        memeListView.addOnItemTouchListener(new RecyclerItem);
     }
 }
