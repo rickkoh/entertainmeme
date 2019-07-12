@@ -96,18 +96,10 @@
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <link.fls.swipestack.SwipeStack
-                    android:id="@+id/swipeStack"
+                <com.yuyakaido.android.cardstackview.CardStackView
+                    android:id="@+id/memeCardStack"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="20dp"
-                    app:disable_hw_acceleration="true"
-                    app:stack_rotation="0"
-                    app:stack_size="3"
-                    app:stack_spacing="0dp"
-                    app:swipe_opacity="0.9">
-                </link.fls.swipestack.SwipeStack>
-
+                    android:layout_height="match_parent"/>
             </FrameLayout>
 
         </LinearLayout>
