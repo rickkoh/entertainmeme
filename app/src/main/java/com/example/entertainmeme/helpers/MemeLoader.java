@@ -61,9 +61,17 @@ public class MemeLoader extends Observable {
         noOfPreloadedMemes+=1;
     }
 
+    public Meme getMeme(int position) {
+        return memes.get(position);
+    }
+
     // Return memes
     public List<Meme> getMemes() {
         return memes;
+    }
+
+    public void removeMeme(int position) {
+        memes.remove(position);
     }
 
     public static int getNoOfPreloadedMemes() {

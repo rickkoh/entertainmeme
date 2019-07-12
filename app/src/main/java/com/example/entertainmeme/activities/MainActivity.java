@@ -2,31 +2,37 @@ package com.example.entertainmeme.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.entertainmeme.helpers.MemeAdapter;
 import com.example.entertainmeme.helpers.MemeLoader;
 import com.example.entertainmeme.R;
 import com.example.entertainmeme.helpers.MemeDbHelper;
-import com.example.entertainmeme.helpers.SwipeStackAdapter;
+import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
+import com.yuyakaido.android.cardstackview.CardStackListener;
+import com.yuyakaido.android.cardstackview.CardStackView;
+import com.yuyakaido.android.cardstackview.Direction;
+import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
 
 import java.util.Observable;
 import java.util.Observer;
 
-import link.fls.swipestack.SwipeStack;
-
-public class MainActivity extends AppCompatActivity implements Observer {
+public class MainActivity extends AppCompatActivity implements Observer, CardStackListener, MemeAdapter.OnClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    MemeDbHelper memeDbHelper;
 
     TextView titleTextView;
-    SwipeStack swipeStack;
-    SwipeStackAdapter swipeStackAdapter;
-    static Boolean swipeLock = false;
+
+    CardStackView memeCardStackView;
+    MemeAdapter memeAdapter;
+    CardStackLayoutManager memeCardStackLayoutManager;
+    int position = 0;
 
     ImageButton previousBtn;
     ImageButton skipBtn;
@@ -39,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         setContentView(R.layout.activity_main);
 
         // Create an instance of database
-        final MemeDbHelper memeDbHelper = new MemeDbHelper(this);
+        memeDbHelper = new MemeDbHelper(this);
 
         // Access MemeLoader class
         MemeLoader.getInstance(this);
@@ -48,9 +54,14 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
         // Variables
         titleTextView = (TextView)findViewById(R.id.titleTextView);
-        swipeStack = (SwipeStack)findViewById(R.id.swipeStack);
-        swipeStackAdapter = new SwipeStackAdapter(MemeLoader.getInstance().getMemes(), this);
-        swipeStack.setAdapter(swipeStackAdapter);
+
+        memeCardStackView = (CardStackView)findViewById(R.id.memeCardStack);
+        memeCardStackLayoutManager = new CardStackLayoutManager(this, this);
+        memeCardStackLayoutManager.setDirections(Direction.HORIZONTAL);
+
+        memeAdapter = new MemeAdapter(MemeLoader.getInstance().getMemes(), this, this);
+        memeCardStackView.setLayoutManager(memeCardStackLayoutManager);
+        memeCardStackView.setAdapter(memeAdapter);
 
         previousBtn = (ImageButton)findViewById(R.id.previousBtn);
         skipBtn = (ImageButton)findViewById(R.id.skipBtn);
@@ -61,23 +72,24 @@ public class MainActivity extends AppCompatActivity implements Observer {
         previousBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                swipeStackAdapter.back();
-                swipeStack.resetStack();
                 MemeLoader.getInstance().increasePreloadedMemesCount();
+                memeCardStackView.rewind();
             }
         });
 
         skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                swipeStack.swipeTopViewToLeft();
+                memeCardStackLayoutManager.setSwipeAnimationSetting(new SwipeAnimationSetting.Builder().setDirection(Direction.Left).build());
+                memeCardStackView.swipe();
             }
         });
 
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                swipeStack.swipeTopViewToRight();
+                memeCardStackLayoutManager.setSwipeAnimationSetting(new SwipeAnimationSetting.Builder().setDirection(Direction.Right).build());
+                memeCardStackView.swipe();
             }
         });
 
@@ -88,69 +100,60 @@ public class MainActivity extends AppCompatActivity implements Observer {
                 startActivity(i);
             }
         });
-
-        swipeStack.setListener(new SwipeStack.SwipeStackListener() {
-            @Override
-            public void onClick(int position) {
-                Intent i = new Intent(MainActivity.this, MemeActivity.class);
-                i.putExtra("title", swipeStackAdapter.getItem(position).getTitle());
-                i.putExtra("url", swipeStackAdapter.getItem(position).getUrl());
-                startActivity(i);
-            }
-
-            @Override
-            public void onViewSwipedToLeft(int position) {
-                Log.d(TAG, "Swiped Left");
-                MemeLoader.decreasePreloadedMemesCount();
-                swipeStackAdapter.next();
-            }
-
-            @Override
-            public void onViewSwipedToRight(int position) {
-                Log.d(TAG, "Swiped Right");
-                // Save meme to database
-                memeDbHelper.insertMeme(swipeStackAdapter.getItem(position));
-                MemeLoader.decreasePreloadedMemesCount();
-                swipeStackAdapter.next();
-            }
-
-            @Override
-            public void onStackEmpty() {
-                swipeStackAdapter.notifyDataSetChanged();
-            }
-        });
-
-        swipeStack.setSwipeProgressListener(new SwipeStack.SwipeProgressListener() {
-            @Override
-            public void onSwipeStart(int position) {
-                swipeLock = true;
-            }
-
-            @Override
-            public void onSwipeProgress(int position, float progress) {
-                swipeLock = true;
-            }
-
-            @Override
-            public void onSwipeEnd(int position) {
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeLock = false;
-                    }
-                }, 300);
-            }
-        });
     }
 
     @Override
     public void update(Observable o, Object arg) {
 
         // Update data if user is not swiping the meme
-        if (!swipeLock) swipeStackAdapter.notifyDataSetChanged();
+        memeAdapter.notifyDataSetChanged();
+        memeCardStackLayoutManager.setTopPosition(position);
 
         Log.d(TAG, MemeLoader.getInstance().getNoOfPreloadedMemes() + "");
 
+    }
+
+    @Override
+    public void onCardDragging(Direction direction, float ratio) {
+
+    }
+
+    @Override
+    public void onCardSwiped(Direction direction) {
+        MemeLoader.decreasePreloadedMemesCount();
+        if (direction == Direction.Right) {
+            memeDbHelper.insertMeme(MemeLoader.getInstance().getMeme(position));
+            MemeLoader.getInstance().removeMeme(position);
+        } else {
+            position += 1;
+        }
+    }
+
+    @Override
+    public void onCardRewound() {
+        position -= 1;
+    }
+
+    @Override
+    public void onCardCanceled() {
+
+    }
+
+    @Override
+    public void onCardAppeared(View view, int position) {
+
+    }
+
+    @Override
+    public void onCardDisappeared(View view, int position) {
+
+    }
+
+    @Override
+    public void onItemClickListener(int position) {
+        Intent i = new Intent(this, MemeActivity.class);
+        i.putExtra("title", MemeLoader.getInstance().getMeme(position).getTitle());
+        i.putExtra("url", MemeLoader.getInstance().getMeme(position).getUrl());
+        startActivity(i);
     }
 }
