@@ -15,7 +15,7 @@ public class MemeCardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.meme_card);
+        setContentView(R.layout.meme_swipe_card);
 
         memeImageView = (ImageView)findViewById(R.id.memeImageView);
 

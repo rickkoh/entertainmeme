@@ -43,7 +43,7 @@ public class MemeListViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         convertView = LayoutInflater.from(context).inflate(
-                        R.layout.meme_layout,
+                        R.layout.meme_row_card,
                         parent,
                         false
                 );

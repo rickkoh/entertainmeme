@@ -69,7 +69,7 @@ public class SwipeStackAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        convertView = LayoutInflater.from(context).inflate(R.layout.meme_card, parent, false);
+        convertView = LayoutInflater.from(context).inflate(R.layout.meme_swipe_card, parent, false);
         TextView titleTextView = (TextView) convertView.findViewById(R.id.titleTextView);
         ImageView memeImageView = (ImageView) convertView.findViewById(R.id.memeImageView);
 

@@ -56,7 +56,7 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MyViewHolder> 
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.meme_layout,
+                R.layout.meme_row_card,
                 parent,
                 false
         );
