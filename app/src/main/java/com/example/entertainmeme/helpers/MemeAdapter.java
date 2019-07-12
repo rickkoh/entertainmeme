@@ -1,7 +1,6 @@
 package com.example.entertainmeme.helpers;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.entertainmeme.R;
-import com.example.entertainmeme.activities.MainActivity;
-import com.example.entertainmeme.activities.MemeActivity;
 import com.example.entertainmeme.models.Meme;
 
 import java.util.List;
@@ -23,24 +20,35 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MyViewHolder> 
 
     Context context;
     private List<Meme> memes;
+    OnClickListener onClickListener;
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         View view;
         TextView titleTextView;
         ImageView memeImageView;
+        OnClickListener onClickListener;
 
-        public MyViewHolder(View view) {
+        public MyViewHolder(View view, OnClickListener onClickListener) {
             super(view);
             this.view = view;
             this.titleTextView = (TextView)view.findViewById(R.id.titleTextView);
             this.memeImageView = (ImageView) view.findViewById(R.id.memeImageView);
+            this.onClickListener = onClickListener;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            onClickListener.onClickListener(getAdapterPosition());
         }
     }
 
-    public MemeAdapter(Context context, List<Meme> memes) {
+    public MemeAdapter(Context context, List<Meme> memes, OnClickListener onClickListener) {
         this.context = context;
         this.memes = memes;
+        this.onClickListener = onClickListener;
     }
 
     @NonNull
@@ -53,7 +61,7 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MyViewHolder> 
                 false
         );
 
-        MyViewHolder myViewHolder = new MyViewHolder(view);
+        MyViewHolder myViewHolder = new MyViewHolder(view, onClickListener);
 
         return myViewHolder;
     }
@@ -66,11 +74,14 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MyViewHolder> 
                 .load(memes.get(position).getUrl())
                 .into(holder.memeImageView);
 
-
     }
 
     @Override
     public int getItemCount() {
         return memes.size();
+    }
+
+    public interface OnClickListener{
+        void onClickListener(int position);
     }
 }

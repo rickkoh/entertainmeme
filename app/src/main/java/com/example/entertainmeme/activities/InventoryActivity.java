@@ -19,8 +19,9 @@ import com.example.entertainmeme.helpers.MemeDbHelper;
 import com.example.entertainmeme.models.Meme;
 
 import java.util.List;
+import java.util.concurrent.RecursiveAction;
 
-public class InventoryActivity extends AppCompatActivity {
+public class InventoryActivity extends AppCompatActivity implements MemeAdapter.OnClickListener {
 
     RecyclerView memeListView;
     RecyclerView.LayoutManager layoutManager;
@@ -39,8 +40,16 @@ public class InventoryActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         memeListView.setLayoutManager(layoutManager);
 
-        final MemeAdapter memeAdapter = new MemeAdapter(this, memes);
+        final MemeAdapter memeAdapter = new MemeAdapter(this, memes, this);
 
         memeListView.setAdapter(memeAdapter);
+    }
+
+    @Override
+    public void onClickListener(int position) {
+        Intent i = new Intent(this, MemeActivity.class);
+        i.putExtra("title", memes.get(position).getTitle());
+        i.putExtra("url", memes.get(position).getUrl());
+        startActivity(i);
     }
 }
