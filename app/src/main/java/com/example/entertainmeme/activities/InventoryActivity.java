@@ -8,15 +8,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.entertainmeme.R;
-import com.example.entertainmeme.helpers.MemeAdapter;
 import com.example.entertainmeme.helpers.MemeDbHelper;
+import com.example.entertainmeme.helpers.MemeLayoutAdapter;
 import com.example.entertainmeme.models.Meme;
 
 import java.util.List;
 
-public class InventoryActivity extends AppCompatActivity implements MemeAdapter.OnClickListener {
+public class InventoryActivity extends AppCompatActivity implements MemeLayoutAdapter.OnClickListener {
+
+    MemeDbHelper memeDbHelper;
 
     RecyclerView memeListView;
+    MemeLayoutAdapter memeLayoutAdapter;
     RecyclerView.LayoutManager layoutManager;
     List<Meme> memes;
 
@@ -25,7 +28,7 @@ public class InventoryActivity extends AppCompatActivity implements MemeAdapter.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
 
-        final MemeDbHelper memeDbHelper = new MemeDbHelper(this);
+        memeDbHelper = new MemeDbHelper(this);
 
         memes = memeDbHelper.getAllMemes();
 
@@ -33,9 +36,9 @@ public class InventoryActivity extends AppCompatActivity implements MemeAdapter.
         layoutManager = new LinearLayoutManager(this);
         memeListView.setLayoutManager(layoutManager);
 
-        final MemeAdapter memeAdapter = new MemeAdapter(memes, this, this, "meme_row_card");
+        memeLayoutAdapter = new MemeLayoutAdapter(memes, this, this);
 
-        memeListView.setAdapter(memeAdapter);
+        memeListView.setAdapter(memeLayoutAdapter);
     }
 
     @Override
@@ -44,5 +47,11 @@ public class InventoryActivity extends AppCompatActivity implements MemeAdapter.
         i.putExtra("title", memes.get(position).getTitle());
         i.putExtra("url", memes.get(position).getUrl());
         startActivity(i);
+    }
+
+    @Override
+    public void onButtonClickListener(int position) {
+        memes.remove(position);
+        memeLayoutAdapter.notifyDataSetChanged();
     }
 }
