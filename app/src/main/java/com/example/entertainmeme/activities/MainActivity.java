@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
         previousBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MemeLoader.getInstance().increasePreloadedMemesCount();
                 memeCardStackView.rewind();
             }
         });
@@ -106,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
     public void update(Observable o, Object arg) {
 
         // Update data if user is not swiping the meme
-        memeAdapter.notifyDataSetChanged();
+        memeAdapter.notifyItemInserted(memeAdapter.getItemCount());
         memeCardStackLayoutManager.setTopPosition(position);
 
         Log.d(TAG, MemeLoader.getInstance().getNoOfPreloadedMemes() + "");
@@ -115,7 +114,6 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
 
     @Override
     public void onCardDragging(Direction direction, float ratio) {
-
     }
 
     @Override
@@ -131,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
 
     @Override
     public void onCardRewound() {
+        MemeLoader.increasePreloadedMemesCount();
         position -= 1;
     }
 
