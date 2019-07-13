@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
         memeCardStackLayoutManager = new CardStackLayoutManager(this, this);
         memeCardStackLayoutManager.setDirections(Direction.HORIZONTAL);
 
-        memeAdapter = new MemeAdapter(MemeLoader.getInstance().getMemes(), this, this);
+        memeAdapter = new MemeAdapter(MemeLoader.getInstance().getMemes(), this);
         memeCardStackView.setLayoutManager(memeCardStackLayoutManager);
         memeCardStackView.setAdapter(memeAdapter);
 
