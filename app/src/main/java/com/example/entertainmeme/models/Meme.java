@@ -16,7 +16,6 @@ public class Meme {
     private String subreddit;
     private String title;
     private String url;
-    private Bitmap image;
     private String datetimeadded;
 
     // Database table and column names
@@ -36,7 +35,6 @@ public class Meme {
         subreddit = sr;
         title = t;
         url = u;
-        loadImage();
     }
 
     // Constructor
@@ -47,7 +45,6 @@ public class Meme {
         title = t;
         url = u;
         datetimeadded = d;
-        loadImage();
     }
 
     public Meme(String pl, String sr, String t, String u) {
@@ -55,7 +52,6 @@ public class Meme {
         subreddit = sr;
         title = t;
         url = u;
-        loadImage();
     }
 
     // Get PostLink
@@ -77,30 +73,5 @@ public class Meme {
     public String getUrl() {
         return url;
     }
-
-    // Get Image
-    public Bitmap getImage() {
-        return image;
-    }
-
-    // Load image
-    public void loadImage() {
-        if (url != null) {
-            try {
-                Glide.with(context)
-                    .asBitmap()
-                    .load(url)
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                            image = resource;
-                        }
-                    });
-            } catch (Exception e) {
-
-            }
-        }
-    }
-
 
 }
