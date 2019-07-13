@@ -7,4 +7,5 @@
     <color name="lightgrey">#DCDCDC</color>
     <color name="black">#000000</color>
     <color name="backgroundColor">#FFF</color>
+    <color name="topBtn">#006a5f</color>
 </resources>
