@@ -29,7 +29,19 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
-                android:id="@+id/button"
+                android:id="@+id/saveBtn"
+                android:layout_width="37dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="44dp"
+                android:background="@color/white"
+                android:scaleType="fitXY"
+                android:src="@drawable/save"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
+            <ImageButton
+                android:id="@+id/deleteBtn"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/trash"

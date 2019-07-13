@@ -43,7 +43,7 @@ public class InventoryActivity extends AppCompatActivity implements MemeLayoutAd
         memeLayoutAdapter = new MemeLayoutAdapter(memes, this, this);
 
         memeListView.setAdapter(memeLayoutAdapter);
-        
+
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
