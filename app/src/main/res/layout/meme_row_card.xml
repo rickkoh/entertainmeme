@@ -28,11 +28,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/button"
-                android:layout_width="88dp"
-                android:layout_height="wrap_content"
-                android:text="Delete"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/trash"
+                android:background="@color/white"
+                android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

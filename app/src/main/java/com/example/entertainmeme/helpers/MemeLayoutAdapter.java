@@ -30,7 +30,7 @@ public class MemeLayoutAdapter extends RecyclerView.Adapter<MemeLayoutAdapter.My
         View view;
         TextView titleTextView;
         ImageView memeImageView;
-        Button button;
+        ImageButton button;
         OnClickListener onClickListener;
 
         public MyViewHolder(View view, OnClickListener onClickListener) {
@@ -38,7 +38,7 @@ public class MemeLayoutAdapter extends RecyclerView.Adapter<MemeLayoutAdapter.My
             this.view = view;
             this.titleTextView = (TextView)view.findViewById(R.id.titleTextView);
             this.memeImageView = (ImageView)view.findViewById(R.id.memeImageView);
-            this.button = (Button)view.findViewById(R.id.button);
+            this.button = (ImageButton)view.findViewById(R.id.button);
             this.onClickListener = onClickListener;
 
             itemView.setOnClickListener(this);

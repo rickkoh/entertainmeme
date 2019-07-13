@@ -2,6 +2,8 @@ package com.example.entertainmeme.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,6 +24,7 @@ public class InventoryActivity extends AppCompatActivity implements MemeLayoutAd
     MemeLayoutAdapter memeLayoutAdapter;
     RecyclerView.LayoutManager layoutManager;
     List<Meme> memes;
+    ImageButton backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,7 @@ public class InventoryActivity extends AppCompatActivity implements MemeLayoutAd
 
         memes = memeDbHelper.getAllMemes();
 
+        backBtn=(ImageButton)findViewById(R.id.backBtn);
         memeListView = (RecyclerView)findViewById(R.id.memeListView);
         layoutManager = new LinearLayoutManager(this);
         memeListView.setLayoutManager(layoutManager);
@@ -39,6 +43,14 @@ public class InventoryActivity extends AppCompatActivity implements MemeLayoutAd
         memeLayoutAdapter = new MemeLayoutAdapter(memes, this, this);
 
         memeListView.setAdapter(memeLayoutAdapter);
+        
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(InventoryActivity.this, com.example.entertainmeme.activities.MainActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
