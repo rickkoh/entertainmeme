@@ -12,9 +12,13 @@ PhotoView
 Used for image viewing
 https://github.com/chrisbanes/PhotoView
 
-SwipeStack
+Recyclerview
+Used to display list of elements
+https://developer.android.com/guide/topics/ui/layout/recyclerview
+
+CardStack
 Used for swiping memes
-https://github.com/flschweiger/SwipeStack
+https://github.com/yuyakaido/CardStackView/tree/master/cardstackview
 
 AVLoadingIndicatorView
 Used to indicate loading
