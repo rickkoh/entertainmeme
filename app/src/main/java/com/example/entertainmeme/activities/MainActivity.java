@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
         MemeLoader.decreasePreloadedMemesCount();
         if (direction == Direction.Right) {
             memeDbHelper.insertMeme(MemeLoader.getInstance().getMeme(position));
+            memeAdapter.notifyItemRemoved(position);
             MemeLoader.getInstance().removeMeme(position);
         } else {
             position += 1;
