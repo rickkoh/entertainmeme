@@ -1,7 +1,9 @@
 package com.example.entertainmeme.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -14,6 +16,7 @@ import com.example.entertainmeme.helpers.MemeDbHelper;
 import com.example.entertainmeme.helpers.MemeLayoutAdapter;
 import com.example.entertainmeme.models.Meme;
 
+import java.net.URI;
 import java.util.List;
 
 public class InventoryActivity extends AppCompatActivity implements MemeLayoutAdapter.OnClickListener {
@@ -25,6 +28,10 @@ public class InventoryActivity extends AppCompatActivity implements MemeLayoutAd
     RecyclerView.LayoutManager layoutManager;
     List<Meme> memes;
     ImageButton backBtn;
+    String ImagePath;
+    String memeposition;
+    Bitmap bitmap;
+    URI uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +69,10 @@ public class InventoryActivity extends AppCompatActivity implements MemeLayoutAd
     }
 
     @Override
-    public void onButtonClickListener(int position) {
+    public void onDeleteButtonClickListener(int position) {
         memes.remove(position);
         memeLayoutAdapter.notifyDataSetChanged();
     }
+
+
 }

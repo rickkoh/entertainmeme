@@ -31,7 +31,7 @@ public class MemeLayoutAdapter extends RecyclerView.Adapter<MemeLayoutAdapter.My
         TextView titleTextView;
         ImageView memeImageView;
         ImageButton deleteBtn;
-        ImageButton saveBtn;
+
         OnClickListener onClickListener;
 
         public MyViewHolder(View view, OnClickListener onClickListener) {
@@ -40,22 +40,25 @@ public class MemeLayoutAdapter extends RecyclerView.Adapter<MemeLayoutAdapter.My
             this.titleTextView = (TextView)view.findViewById(R.id.titleTextView);
             this.memeImageView = (ImageView)view.findViewById(R.id.memeImageView);
             this.deleteBtn = (ImageButton)view.findViewById(R.id.deleteBtn);
-            this.saveBtn=(ImageButton)view.findViewById(R.id.saveBtn);
+
             this.onClickListener = onClickListener;
 
             itemView.setOnClickListener(this);
             deleteBtn.setOnClickListener(this);
-            saveBtn.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View v) {
             if (v == deleteBtn) {
-                onClickListener.onButtonClickListener(getAdapterPosition());
-            } else {
+                onClickListener.onDeleteButtonClickListener(getAdapterPosition());
+            }
+
+            else {
                 onClickListener.onItemClickListener(getAdapterPosition());
             }
         }
+
 
 
 
@@ -99,6 +102,7 @@ public class MemeLayoutAdapter extends RecyclerView.Adapter<MemeLayoutAdapter.My
 
     public interface OnClickListener{
         void onItemClickListener(int position);
-        void onButtonClickListener(int position);
+        void onDeleteButtonClickListener(int position);
+
     }
 }
