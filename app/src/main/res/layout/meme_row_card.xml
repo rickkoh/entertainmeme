@@ -30,14 +30,15 @@
 
 
             <ImageButton
-                android:id="@+id/deleteBtn"
+                android:id="@+id/elipsisBtn"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/elipsis"
                 android:background="@color/white"
                 android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="showPopup"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
