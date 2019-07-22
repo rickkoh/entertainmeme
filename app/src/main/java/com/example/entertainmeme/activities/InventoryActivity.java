@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -69,10 +72,30 @@ public class InventoryActivity extends AppCompatActivity implements MemeLayoutAd
     }
 
     @Override
-    public void onDeleteButtonClickListener(int position) {
-        memes.remove(position);
-        memeLayoutAdapter.notifyDataSetChanged();
-    }
+    public void onElipsisButtonClickListener(final View view, final int position) {
+        PopupMenu popup = new PopupMenu(this, view);
 
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.save_meme:
+                        return true;
+                    case R.id.delete_meme:
+                        memes.remove(position);
+                        memeLayoutAdapter.notifyDataSetChanged();
+                        return true;
+                    case R.id.share_meme:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.inventorymenu, popup.getMenu());
+        popup.show();
+    }
 
 }

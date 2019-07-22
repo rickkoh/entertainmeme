@@ -3,11 +3,14 @@ package com.example.entertainmeme.helpers;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,7 +33,7 @@ public class MemeLayoutAdapter extends RecyclerView.Adapter<MemeLayoutAdapter.My
         View view;
         TextView titleTextView;
         ImageView memeImageView;
-        ImageButton deleteBtn;
+        ImageButton elipsisBtn;
 
         OnClickListener onClickListener;
 
@@ -39,30 +42,24 @@ public class MemeLayoutAdapter extends RecyclerView.Adapter<MemeLayoutAdapter.My
             this.view = view;
             this.titleTextView = (TextView)view.findViewById(R.id.titleTextView);
             this.memeImageView = (ImageView)view.findViewById(R.id.memeImageView);
-            this.deleteBtn = (ImageButton)view.findViewById(R.id.deleteBtn);
+            this.elipsisBtn =(ImageButton)view.findViewById(R.id.elipsisBtn);
 
             this.onClickListener = onClickListener;
 
             itemView.setOnClickListener(this);
-            deleteBtn.setOnClickListener(this);
+            elipsisBtn.setOnClickListener(this);
 
         }
 
         @Override
         public void onClick(View v) {
-            if (v == deleteBtn) {
-                onClickListener.onDeleteButtonClickListener(getAdapterPosition());
+            if (v == elipsisBtn) {
+                onClickListener.onElipsisButtonClickListener(elipsisBtn, getAdapterPosition());
             }
-
             else {
                 onClickListener.onItemClickListener(getAdapterPosition());
             }
         }
-
-
-
-
-
     }
 
     public MemeLayoutAdapter(List<Meme> memes, Context context, OnClickListener onClickListener) {
@@ -102,7 +99,6 @@ public class MemeLayoutAdapter extends RecyclerView.Adapter<MemeLayoutAdapter.My
 
     public interface OnClickListener{
         void onItemClickListener(int position);
-        void onDeleteButtonClickListener(int position);
-
+        void onElipsisButtonClickListener(View view, int position);
     }
 }
