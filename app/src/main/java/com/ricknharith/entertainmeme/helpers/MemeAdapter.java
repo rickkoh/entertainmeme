@@ -1,4 +1,4 @@
-package com.example.entertainmeme.helpers;
+package com.ricknharith.entertainmeme.helpers;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.entertainmeme.R;
-import com.example.entertainmeme.models.Meme;
+import com.ricknharith.entertainmeme.R;
+import com.ricknharith.entertainmeme.models.Meme;
 
 import java.util.List;
 

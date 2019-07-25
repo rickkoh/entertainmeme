@@ -1,11 +1,6 @@
-package com.example.entertainmeme.models;
+package com.ricknharith.entertainmeme.models;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 
 public class Meme {
     private Context context;

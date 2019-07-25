@@ -1,10 +1,10 @@
-package com.example.entertainmeme.activities;
+package com.ricknharith.entertainmeme.activities;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.example.entertainmeme.R;
+import com.ricknharith.entertainmeme.R;
 import com.github.chrisbanes.photoview.PhotoView;
 
 public class MemeActivity extends AppCompatActivity {

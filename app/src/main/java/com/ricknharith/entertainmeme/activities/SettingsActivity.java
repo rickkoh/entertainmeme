@@ -1,10 +1,10 @@
-package com.example.entertainmeme.activities;
+package com.ricknharith.entertainmeme.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.example.entertainmeme.R;
+import com.ricknharith.entertainmeme.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

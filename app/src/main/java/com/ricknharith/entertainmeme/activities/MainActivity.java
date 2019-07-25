@@ -1,4 +1,4 @@
-package com.example.entertainmeme.activities;
+package com.ricknharith.entertainmeme.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,10 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.entertainmeme.helpers.MemeAdapter;
-import com.example.entertainmeme.helpers.MemeLoader;
-import com.example.entertainmeme.R;
-import com.example.entertainmeme.helpers.MemeDbHelper;
+import com.ricknharith.entertainmeme.helpers.MemeAdapter;
+import com.ricknharith.entertainmeme.helpers.MemeLoader;
+import com.ricknharith.entertainmeme.R;
+import com.ricknharith.entertainmeme.helpers.MemeDbHelper;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
         inventoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, com.example.entertainmeme.activities.InventoryActivity.class);
+                Intent i = new Intent(MainActivity.this, com.ricknharith.entertainmeme.activities.InventoryActivity.class);
                 startActivity(i);
             }
         });
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, com.example.entertainmeme.activities.SettingsActivity.class);
+                Intent i = new Intent(MainActivity.this, com.ricknharith.entertainmeme.activities.SettingsActivity.class);
                 startActivity(i);
             }
         });

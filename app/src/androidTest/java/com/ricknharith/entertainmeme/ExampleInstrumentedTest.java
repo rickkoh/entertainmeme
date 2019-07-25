@@ -1,4 +1,4 @@
-package com.example.entertainmeme;
+package com.ricknharith.entertainmeme;
 
 import android.content.Context;
 import androidx.test.InstrumentationRegistry;

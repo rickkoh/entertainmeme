@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.entertainmeme">
+    package="com.ricknharith.entertainmeme">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -13,9 +13,9 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.SettingsActivity"></activity>
+        <activity android:name="com.ricknharith.entertainmeme.activities.SettingsActivity"></activity>
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.ricknharith.entertainmeme.activities.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
@@ -24,8 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.InventoryActivity" />
-        <activity android:name=".activities.MemeActivity" />
+        <activity android:name="com.ricknharith.entertainmeme.activities.InventoryActivity" />
+        <activity android:name="com.ricknharith.entertainmeme.activities.MemeActivity" />
     </application>
 
 </manifest>

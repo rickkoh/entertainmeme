@@ -1,4 +1,4 @@
-package com.example.entertainmeme.helpers;
+package com.ricknharith.entertainmeme.helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.entertainmeme.models.Meme;
+import com.ricknharith.entertainmeme.models.Meme;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

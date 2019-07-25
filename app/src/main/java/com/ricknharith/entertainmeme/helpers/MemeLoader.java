@@ -1,4 +1,4 @@
-package com.example.entertainmeme.helpers;
+package com.ricknharith.entertainmeme.helpers;
 import android.content.Context;
 
 import com.android.volley.Request;
@@ -7,14 +7,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.entertainmeme.models.Meme;
+import com.ricknharith.entertainmeme.models.Meme;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.Stack;
 
 // This class is a singleton class
 // It is responsible for handling the loading of memes

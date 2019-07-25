@@ -1,24 +1,19 @@
-package com.example.entertainmeme.helpers;
+package com.ricknharith.entertainmeme.helpers;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.entertainmeme.R;
-import com.example.entertainmeme.models.Meme;
+import com.ricknharith.entertainmeme.R;
+import com.ricknharith.entertainmeme.models.Meme;
 
 import java.util.List;
 

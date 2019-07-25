@@ -1,9 +1,8 @@
-package com.example.entertainmeme.activities;
+package com.ricknharith.entertainmeme.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,10 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.entertainmeme.R;
-import com.example.entertainmeme.helpers.MemeDbHelper;
-import com.example.entertainmeme.helpers.MemeLayoutAdapter;
-import com.example.entertainmeme.models.Meme;
+import com.ricknharith.entertainmeme.R;
+import com.ricknharith.entertainmeme.helpers.MemeDbHelper;
+import com.ricknharith.entertainmeme.helpers.MemeLayoutAdapter;
+import com.ricknharith.entertainmeme.models.Meme;
 
 import java.net.URI;
 import java.util.List;
@@ -57,7 +56,7 @@ public class InventoryActivity extends AppCompatActivity implements MemeLayoutAd
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(InventoryActivity.this, com.example.entertainmeme.activities.MainActivity.class);
+                Intent i = new Intent(InventoryActivity.this, com.ricknharith.entertainmeme.activities.MainActivity.class);
                 startActivity(i);
             }
         });
