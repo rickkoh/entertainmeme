@@ -28,9 +28,6 @@ SQLite
 Used for storing data locally
 https://developer.android.com/training/data-storage/sqlite
 
-Picasso
-Used for image saving
-https://github.com/square/picasso
 
 ### APIs used:
 
