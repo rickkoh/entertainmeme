@@ -13,7 +13,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:weightSum="100"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/darkGrey">
 
                 <TextView
                     android:id="@+id/titleTextView"
@@ -26,7 +27,8 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="90">
+                    android:layout_weight="90"
+                    android:background="@color/darkGrey">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
