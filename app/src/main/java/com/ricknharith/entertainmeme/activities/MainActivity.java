@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
 
     private static final String TAG = MainActivity.class.getSimpleName();
     MemeDbHelper memeDbHelper;
-
     TextView titleTextView;
 
     CardStackView memeCardStackView;
@@ -38,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
     ImageButton skipBtn;
     ImageButton likeBtn;
     ImageButton inventoryBtn;
-    ImageButton settingsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
         skipBtn = (ImageButton)findViewById(R.id.skipBtn);
         likeBtn = (ImageButton)findViewById(R.id.likeBtn);
         inventoryBtn = (ImageButton)findViewById(R.id.inventoryBtn);
-        settingsBtn=(ImageButton)findViewById(R.id.settingsBtn);
 
         // Listeners
         previousBtn.setOnClickListener(new View.OnClickListener() {
@@ -102,13 +99,7 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
             }
         });
 
-        settingsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, com.ricknharith.entertainmeme.activities.SettingsActivity.class);
-                startActivity(i);
-            }
-        });
+
 
     }
 
