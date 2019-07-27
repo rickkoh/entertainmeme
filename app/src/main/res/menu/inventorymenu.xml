@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/save_meme"
-        android:icon="@drawable/save"
-        android:title="@string/save_meme"
-        app:showAsAction=""
-        ></item>
-    <item android:id="@+id/delete_meme"
-        android:icon="@drawable/trash"
-        android:title="@string/delete_meme"></item>
-    <item android:id="@+id/share_meme"
-        android:icon="@drawable/share"
-        android:title="@string/share_meme"></item>
-
+        <item
+            android:id="@+id/elipsis"
+            android:icon="@drawable/black_elipsis"
+            android:title=""
+            app:showAsAction="always">
+                <item android:id="@+id/delete_meme"
+                    android:title="@string/delete_meme"
+                    android:icon="@drawable/black_trash"
+                    app:showAsAction="ifRoom"></item>
+                <item android:id="@+id/share_meme"
+                    android:icon="@drawable/black_share"
+                    android:title="@string/share_meme"
+                    app:showAsAction="ifRoom"></item>
+        </item>
 </menu>
