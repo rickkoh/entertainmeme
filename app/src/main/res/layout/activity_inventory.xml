@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="70dp"
-        android:background="@color/lightgrey"
+        android:background="@color/black"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/lightgrey">
+        android:background="@color/black">
 
         <ImageButton
             android:id="@+id/backBtn"
@@ -31,9 +31,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:padding="10dp"
-            android:background="@drawable/topbtns"
+            android:background="@drawable/main_activity_btns"
             android:scaleType="fitXY"
-            android:src="@drawable/arrowback"
+            android:src="@drawable/white_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
