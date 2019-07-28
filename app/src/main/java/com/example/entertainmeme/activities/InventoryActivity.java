@@ -57,8 +57,7 @@ public class InventoryActivity extends AppCompatActivity implements MemeLayoutAd
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(InventoryActivity.this, com.example.entertainmeme.activities.MainActivity.class);
-                startActivity(i);
+                finish();
             }
         });
     }

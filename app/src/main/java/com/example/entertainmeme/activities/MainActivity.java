@@ -27,13 +27,12 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
     private static final String TAG = MainActivity.class.getSimpleName();
     MemeDbHelper memeDbHelper;
 
-    TextView titleTextView;
-
     CardStackView memeCardStackView;
     MemeAdapter memeAdapter;
     CardStackLayoutManager memeCardStackLayoutManager;
     int position = 0;
 
+    TextView titleTextView;
     ImageButton previousBtn;
     ImageButton skipBtn;
     ImageButton likeBtn;
@@ -42,28 +41,30 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         // Create an instance of database
         memeDbHelper = new MemeDbHelper(this);
 
-        // Access MemeLoader class
+        // Get MemeLoader class
         MemeLoader.getInstance(this);
-        // Register as an observer
+        // Register observer
         MemeLoader.getInstance().addObserver(this);
 
-        // Variables
-        titleTextView = (TextView)findViewById(R.id.titleTextView);
-
+        // Instantiate card stack view
         memeCardStackView = (CardStackView)findViewById(R.id.memeCardStack);
         memeCardStackLayoutManager = new CardStackLayoutManager(this, this);
         memeCardStackLayoutManager.setDirections(Direction.HORIZONTAL);
 
+        // Set card stack view properties
         memeAdapter = new MemeAdapter(MemeLoader.getInstance().getMemes(), this);
         memeCardStackView.setLayoutManager(memeCardStackLayoutManager);
         memeCardStackView.setAdapter(memeAdapter);
 
+        // Instantiate other components
+        titleTextView = (TextView)findViewById(R.id.titleTextView);
         previousBtn = (ImageButton)findViewById(R.id.previousBtn);
         skipBtn = (ImageButton)findViewById(R.id.skipBtn);
         likeBtn = (ImageButton)findViewById(R.id.likeBtn);
@@ -130,11 +131,14 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
     @Override
     public void onCardSwiped(Direction direction) {
         MemeLoader.decreasePreloadedMemesCount();
+        // If card is swiped right
         if (direction == Direction.Right) {
+            // Add meme
             memeDbHelper.insertMeme(MemeLoader.getInstance().getMeme(position));
             memeAdapter.notifyItemRemoved(position);
             MemeLoader.getInstance().removeMeme(position);
         } else {
+            //
             position += 1;
         }
     }
