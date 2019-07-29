@@ -24,32 +24,30 @@ import com.ricknharith.entertainmeme.models.Meme;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.net.URI;
 import java.util.List;
 
 public class InventoryActivity extends AppCompatActivity implements MemeLayoutAdapter.OnClickListener {
 
+    // Instantiate db object
     MemeDbHelper memeDbHelper;
 
+    // Instantiate controls
     RecyclerView memeListView;
     MemeLayoutAdapter memeLayoutAdapter;
     RecyclerView.LayoutManager layoutManager;
     List<Meme> memes;
     ImageButton backBtn;
-    String ImagePath;
-    String memeposition;
-    Bitmap bitmap;
-    URI uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
 
+        // Create db object
         memeDbHelper = new MemeDbHelper(this);
 
         memes = memeDbHelper.getAllMemes();
 
-        backBtn=(ImageButton)findViewById(R.id.backBtn);
+        backBtn = (ImageButton)findViewById(R.id.backBtn);
         memeListView = (RecyclerView)findViewById(R.id.memeListView);
         layoutManager = new LinearLayoutManager(this);
         memeListView.setLayoutManager(layoutManager);
