@@ -115,6 +115,7 @@ public class InventoryActivity extends AppCompatActivity implements MemeLayoutAd
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.delete_meme:
+                        memeDbHelper.deleteMeme(memes.get(position).getPostLink(),memes.get(position).getTitle());
                         memes.remove(position);
                         memeLayoutAdapter.notifyDataSetChanged();
                         return true;
