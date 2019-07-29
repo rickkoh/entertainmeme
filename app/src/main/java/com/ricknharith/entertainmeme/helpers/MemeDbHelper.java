@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static com.ricknharith.entertainmeme.models.Meme.TABLE_NAME;
+
 public class    MemeDbHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "MemeDbHelper";
@@ -32,7 +34,7 @@ public class    MemeDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + Meme.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
 
@@ -48,7 +50,7 @@ public class    MemeDbHelper extends SQLiteOpenHelper {
         values.put(Meme.C_DATETIMEADDED, dateFormat.format(Calendar.getInstance().getTime()));
 
         try {
-            db.insert(Meme.TABLE_NAME, null, values);
+            db.insert(TABLE_NAME, null, values);
         } catch (Exception e) {
             Log.d(null, e.toString());
             values = new ContentValues();
@@ -56,18 +58,22 @@ public class    MemeDbHelper extends SQLiteOpenHelper {
         }
 
         try {
-            db.update(Meme.TABLE_NAME, values, Meme.C_POSTLINK + "=?", new String[]{meme.getPostLink()});
+            db.update(TABLE_NAME, values, Meme.C_POSTLINK + "=?", new String[]{meme.getPostLink()});
         } catch (Exception ee) {
 
         }
 
         db.close();
     }
-
+    //Deletes the meme
+    public boolean deleteMeme(String pl,String title) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME, "postLink=? and title=?", new String[]{pl, title}) > 0;
+    }
     public List<Meme> getAllMemes() {
         List<Meme> memes = new ArrayList<Meme>();
 
-        String selectQuery = "SELECT * FROM " + Meme.TABLE_NAME + " ORDER BY " + Meme.C_DATETIMEADDED + " DESC";
+        String selectQuery = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + Meme.C_DATETIMEADDED + " DESC";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
