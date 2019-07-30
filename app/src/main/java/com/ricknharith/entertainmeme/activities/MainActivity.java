@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -62,53 +61,60 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
         memeCardStackView.setLayoutManager(memeCardStackLayoutManager);
         memeCardStackView.setAdapter(memeAdapter);
 
-        // Instantiate other components
+        // Instantiate components
         titleTextView = (TextView)findViewById(R.id.titleTextView);
         previousBtn = (ImageButton)findViewById(R.id.previousBtn);
         skipBtn = (ImageButton)findViewById(R.id.skipBtn);
         likeBtn = (ImageButton)findViewById(R.id.likeBtn);
         inventoryBtn = (ImageButton)findViewById(R.id.inventoryBtn);
 
-        // Listeners
+        // Set OnClickListener for previous button
         previousBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Rewind the cardstack
                 memeCardStackView.rewind();
             }
         });
 
+        // Set OnClickListener for skip button
         skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Set swipe direction to left
                 memeCardStackLayoutManager.setSwipeAnimationSetting(new SwipeAnimationSetting.Builder().setDirection(Direction.Left).build());
+                // Swipe card
                 memeCardStackView.swipe();
             }
         });
 
+        // Set OnClickListener for like button
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Set swipe direction to right
                 memeCardStackLayoutManager.setSwipeAnimationSetting(new SwipeAnimationSetting.Builder().setDirection(Direction.Right).build());
+                // Swipe card
                 memeCardStackView.swipe();
             }
         });
 
+        // Set OnClickListener for inventory button
         inventoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Create new intent to launch inventory activity
                 Intent i = new Intent(MainActivity.this, com.ricknharith.entertainmeme.activities.InventoryActivity.class);
+                // Launch intent
                 startActivity(i);
             }
         });
-
-
-
     }
 
     @Override
     public void update(Observable o, Object arg) {
 
-        // Update data if user is not swiping the meme
+        // Update meme data if user is not swiping the meme
         memeAdapter.notifyItemInserted(memeAdapter.getItemCount());
         memeCardStackLayoutManager.setTopPosition(position);
 
@@ -123,44 +129,45 @@ public class MainActivity extends AppCompatActivity implements Observer, CardSta
     @Override
     public void onCardSwiped(Direction direction) {
         MemeLoader.decreasePreloadedMemesCount();
-        // If card is swiped right
+        // Detect the swiped direction of the meme
         if (direction == Direction.Right) {
-            // Add meme
+            // If card was swiped right
+            // Save meme to database
             memeDbHelper.insertMeme(MemeLoader.getInstance().getMeme(position));
+            // Remove item from the stack
             memeAdapter.notifyItemRemoved(position);
             MemeLoader.getInstance().removeMeme(position);
         } else {
-            //
+            // Increase position by 1
             position += 1;
         }
     }
 
     @Override
     public void onCardRewound() {
+        // Increase the preloaded memes count
         MemeLoader.increasePreloadedMemesCount();
+        // Decrease position by 1
         position -= 1;
     }
 
     @Override
-    public void onCardCanceled() {
-
-    }
+    public void onCardCanceled() { }
 
     @Override
-    public void onCardAppeared(View view, int position) {
-
-    }
+    public void onCardAppeared(View view, int position) { }
 
     @Override
-    public void onCardDisappeared(View view, int position) {
-
-    }
+    public void onCardDisappeared(View view, int position) { }
 
     @Override
-    public void onItemClickListener(int position) {
+    public void onCardClickListener(int position) {
+        // Create new intent to launch meme activity
         Intent i = new Intent(this, MemeActivity.class);
+        // Add data to parse
         i.putExtra("title", MemeLoader.getInstance().getMeme(position).getTitle());
         i.putExtra("url", MemeLoader.getInstance().getMeme(position).getUrl());
+        // Launch intent
         startActivity(i);
     }
 }

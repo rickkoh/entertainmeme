@@ -21,6 +21,7 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MyViewHolder> 
     private List<Meme> memes;
     private OnClickListener onClickListener;
 
+    // Create a viewholder class that stores the components of the view
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         View view;
@@ -29,23 +30,29 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MyViewHolder> 
         Context context;
         OnClickListener onClickListener;
 
+        // Constructor
         public MyViewHolder(View view, OnClickListener onClickListener, Context context) {
             super(view);
+            // Instantiate components
             this.view = view;
             this.titleTextView = (TextView)view.findViewById(R.id.titleTextView);
             this.memeImageView = (ImageView) view.findViewById(R.id.memeImageView);
             this.context = context;
             this.onClickListener = onClickListener;
 
+            // Set OnClickListener
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            onClickListener.onItemClickListener(getAdapterPosition());
+            // If the card was clicked
+            // Call onCardClickListener
+            onClickListener.onCardClickListener(getAdapterPosition());
         }
     }
 
+    // Constructor
     public MemeAdapter(List<Meme> memes, OnClickListener onClickListener) {
         this.memes = memes;
         this.onClickListener = onClickListener;
@@ -55,12 +62,12 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
+        // Link components
         View view = LayoutInflater.from(parent.getContext()).inflate(
                     R.layout.meme_swipe_card,
                     parent,
                     false
             );
-
 
         MyViewHolder myViewHolder = new MyViewHolder(view, onClickListener, parent.getContext());
 
@@ -69,8 +76,13 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+
+        // Set components properties
+
+        // Set titleTextView text
         holder.titleTextView.setText(memes.get(position).getTitle());
 
+        // Set image
         Glide.with(holder.context)
             .load(memes.get(position).getUrl())
             .into(holder.memeImageView);
@@ -81,7 +93,8 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MyViewHolder> 
         return memes.size();
     }
 
+    // Interface OnClickListener
     public interface OnClickListener{
-        void onItemClickListener(int position);
+        void onCardClickListener(int position);
     }
 }
