@@ -6,8 +6,8 @@ android {
         applicationId "com.ricknharith.entertainmeme"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 190010000
-        versionName "1.0.0-alpha"
+        versionCode 190010001
+        versionName "1.0.1-alpha"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
