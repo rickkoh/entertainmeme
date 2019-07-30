@@ -17,7 +17,7 @@ import java.util.List;
 
 import static com.ricknharith.entertainmeme.models.Meme.TABLE_NAME;
 
-public class    MemeDbHelper extends SQLiteOpenHelper {
+public class MemeDbHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "MemeDbHelper";
     private static final String dbName = "MemeDb";
@@ -29,18 +29,24 @@ public class    MemeDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        // Create database if database is not yet created
         db.execSQL(Meme.CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        // Commented the next line out because we want to keep the same database when app updates
+        // Currently there are no changes to the database
+        // db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
 
-    // Saves the meme
+    // Saves the meme into the database
     public void insertMeme(Meme meme) {
+        // Open database
         SQLiteDatabase db = this.getWritableDatabase();
+
+        // Add query values
         ContentValues values = new ContentValues();
         values.put(Meme.C_POSTLINK, meme.getPostLink());
         values.put(Meme.C_SUBREDDIT, meme.getSubreddit());
@@ -49,6 +55,7 @@ public class    MemeDbHelper extends SQLiteOpenHelper {
         DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         values.put(Meme.C_DATETIMEADDED, dateFormat.format(Calendar.getInstance().getTime()));
 
+        // Insert meme into database
         try {
             db.insert(TABLE_NAME, null, values);
         } catch (Exception e) {
@@ -57,27 +64,38 @@ public class    MemeDbHelper extends SQLiteOpenHelper {
             values.put(Meme.C_DATETIMEADDED, Calendar.getInstance().getTime().toString());
         }
 
+        // Update meme timestamp
         try {
             db.update(TABLE_NAME, values, Meme.C_POSTLINK + "=?", new String[]{meme.getPostLink()});
         } catch (Exception ee) {
 
         }
 
+        // Close database
         db.close();
     }
-    //Deletes the meme
+
+    // Deletes the specified meme
     public boolean deleteMeme(String pl,String title) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_NAME, "postLink=? and title=?", new String[]{pl, title}) > 0;
     }
+
+    // Return all the memes in the database
     public List<Meme> getAllMemes() {
+        // Create memes list
         List<Meme> memes = new ArrayList<Meme>();
 
+        // Set query
         String selectQuery = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + Meme.C_DATETIMEADDED + " DESC";
 
+        // Open database
         SQLiteDatabase db = this.getWritableDatabase();
+
+        // Run query
         Cursor cursor = db.rawQuery(selectQuery, null);
 
+        // Iterate through results and populate memes
         if (cursor.moveToFirst()) {
             do {
                 Meme meme = new Meme(
@@ -93,8 +111,10 @@ public class    MemeDbHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
+        // Close database
         db.close();
 
+        // Return memes
         return memes;
 
     }

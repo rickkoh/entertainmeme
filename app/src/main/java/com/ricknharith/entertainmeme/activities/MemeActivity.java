@@ -22,23 +22,29 @@ public class MemeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.meme_viewer);
 
-        // Point of this activity is to display the meme in full size
-
+        // Instantiate components
         memePhotoView = (PhotoView)findViewById(R.id.memePhotoView);
         shareBtn = (ImageButton)findViewById(R.id.shareBtn);
 
+        // Get variables
         String title = getIntent().getStringExtra("title");
         String url = getIntent().getStringExtra("url");
 
+        // Set the title
         setTitle(title);
 
+        // Load image into memePhotoView
         Glide.with(this)
                 .load(url)
                 .into(memePhotoView);
+
+        // Set OnClickListener for share button
         shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Create new intent to open share sheet
                 Intent shareIntent = new Intent();
+                // Set share button properties
                 shareIntent.setAction(Intent.ACTION_SEND);
                 shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(getIntent().getStringExtra("url")));
                 shareIntent.setType("image/jpeg");
