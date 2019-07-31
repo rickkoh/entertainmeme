@@ -1,8 +1,16 @@
 package com.ricknharith.entertainmeme.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +26,12 @@ import com.ricknharith.entertainmeme.helpers.MemeDbHelper;
 import com.ricknharith.entertainmeme.helpers.MemeLayoutAdapter;
 import com.ricknharith.entertainmeme.models.Meme;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class InventoryActivity extends AppCompatActivity implements MemeLayoutAdapter.OnClickListener {
@@ -95,8 +109,6 @@ public class InventoryActivity extends AppCompatActivity implements MemeLayoutAd
                         memeLayoutAdapter.notifyItemRemoved(position);
                         return true;
                     case R.id.share_meme:
-                        // If the share menu item is clicked
-                        // Create new intent to open share sheet
                         Intent shareIntent = new Intent();
                         shareIntent.setAction(Intent.ACTION_SEND);
                         shareIntent.putExtra(Intent.EXTRA_STREAM,Uri.parse(memes.get(position).getUrl()));
