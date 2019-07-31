@@ -42,6 +42,7 @@ public class Meme {
         datetimeadded = d;
     }
 
+    // Constructor
     public Meme(String pl, String sr, String t, String u) {
         postLink = pl;
         subreddit = sr;

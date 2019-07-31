@@ -100,6 +100,7 @@ public class MemeLoader extends Observable {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET,
                 url,
+                // Positive Response
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -122,6 +123,7 @@ public class MemeLoader extends Observable {
                         }
                     }
                 },
+                // Negative Response
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
