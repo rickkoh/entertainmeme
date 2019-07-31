@@ -30,9 +30,14 @@
                     android:layout_weight="90"
                     android:background="@color/darkGrey">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                        <FrameLayout
+                            android:id="@+id/mainFrame"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
                                 <com.wang.avi.AVLoadingIndicatorView
                                     android:id="@+id/avi"
@@ -47,14 +52,55 @@
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <ImageView
-                            android:id="@+id/memeImageView"
+                            <ImageView
+                                android:id="@+id/memeImageView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:elevation="50dp"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:id="@+id/left_overlay"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:elevation="50dp"
-                            tools:srcCompat="@tools:sample/avatars" />
+                            android:layout_height="match_parent">
+
+                                <!-- Set your left overlay -->
+
+                                <ImageView
+                                    android:id="@+id/leftOverlayImageView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/white"
+                                    android:elevation="50dp"
+                                    android:src="@drawable/black_cross"
+                                    android:scaleType="center"
+                                    tools:srcCompat="@tools:sample/avatars" />
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:id="@+id/right_overlay"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                                <!-- Set your left overlay -->
+
+                                <ImageView
+                                    android:id="@+id/rightOverlayImageView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/white"
+                                    android:elevation="50dp"
+                                    android:src="@drawable/black_tick"
+                                    android:scaleType="center"
+                                    tools:srcCompat="@tools:sample/avatars" />
+
+                        </FrameLayout>
+
                 </FrameLayout>
         </LinearLayout>
 
